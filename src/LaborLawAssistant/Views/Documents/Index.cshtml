@@ -3,56 +3,79 @@
     ViewData["Title"] = Localizer["Documents"];
 }
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="h3 mb-0">@ViewData["Title"]</h1>
-    <a asp-action="Upload" class="btn btn-primary">@Localizer["Upload a law PDF"]</a>
+<div class="page-header d-flex flex-wrap justify-content-between align-items-end gap-3">
+    <div>
+        <h1 class="page-title">@ViewData["Title"]</h1>
+        <p class="page-subtitle">@Localizer["The laws the assistant can answer from."]</p>
+    </div>
+    <a asp-action="Upload" class="btn btn-primary d-inline-flex align-items-center gap-2">
+        <icon name="upload" />@Localizer["Upload a law PDF"]
+    </a>
 </div>
 
 @if (TempData["UploadedTitle"] is string uploadedTitle)
 {
-    <div class="alert alert-success">@Localizer["\"{0}\" was uploaded: {1} articles found.", uploadedTitle, TempData["ArticleCount"] ?? 0]</div>
+    <div class="notice notice-success mb-3">
+        <icon name="check" size="20" />
+        <span>@Localizer["\"{0}\" was uploaded: {1} articles found.", uploadedTitle, TempData["ArticleCount"] ?? 0]</span>
+    </div>
 }
 @if (TempData["EmbeddingsFailed"] is true)
 {
-    <div class="alert alert-warning">@Localizer["The articles were saved, but the embeddings could not be created. Open the law and click \"Create embeddings\" to try again."]</div>
+    <div class="notice notice-warning mb-3">
+        <icon name="alert" size="20" />
+        <span>@Localizer["The articles were saved, but the embeddings could not be created. Open the law and click \"Create embeddings\" to try again."]</span>
+    </div>
 }
 
 @if (Model.Count == 0)
 {
-    <p class="text-muted">@Localizer["No laws uploaded yet."]</p>
+    <div class="card empty-state">
+        <span class="feature-icon mx-auto"><icon name="file" size="26" /></span>
+        <p class="mb-1 fw-semibold text-body">@Localizer["No laws uploaded yet."]</p>
+        <p class="mb-3">@Localizer["Upload a law to start."]</p>
+        <div>
+            <a asp-action="Upload" class="btn btn-primary d-inline-flex align-items-center gap-2"><icon name="upload" />@Localizer["Upload a law PDF"]</a>
+        </div>
+    </div>
 }
 else
 {
-    <div class="table-responsive">
-        <table class="table align-middle">
-            <thead>
-                <tr>
-                    <th>@Localizer["Title"]</th>
-                    <th>@Localizer["Country"]</th>
-                    <th>@Localizer["File"]</th>
-                    <th>@Localizer["Pages"]</th>
-                    <th>@Localizer["Articles"]</th>
-                    <th>@Localizer["Embeddings"]</th>
-                    <th>@Localizer["Uploaded"]</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var document in Model)
-                {
+    <div class="card table-card overflow-hidden">
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
                     <tr>
-                        <td><a asp-action="Details" asp-route-id="@document.Id">@document.Title</a></td>
-                        <td>@Html.DisplayFor(_ => document.Country)</td>
-                        <td class="text-muted small">@document.FileName</td>
-                        <td>@document.PageCount</td>
-                        <td>@document.ArticleCount</td>
-                        <td class="text-nowrap">
-                            @(document.EmbeddedCount == document.ArticleCount ? "✅" : "⚠️")
-                            @document.EmbeddedCount / @document.ArticleCount
-                        </td>
-                        <td>@document.UploadedAt.ToLocalTime().ToString("g")</td>
+                        <th>@Localizer["Title"]</th>
+                        <th>@Localizer["Country"]</th>
+                        <th>@Localizer["Pages"]</th>
+                        <th>@Localizer["Articles"]</th>
+                        <th>@Localizer["Embeddings"]</th>
+                        <th>@Localizer["Uploaded"]</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var document in Model)
+                    {
+                        var ready = document.EmbeddedCount == document.ArticleCount;
+                        <tr>
+                            <td>
+                                <a class="fw-semibold text-decoration-none" asp-action="Details" asp-route-id="@document.Id">@document.Title</a>
+                                <div class="small text-body-secondary">@document.FileName</div>
+                            </td>
+                            <td class="text-nowrap">@Html.DisplayFor(_ => document.Country)</td>
+                            <td>@document.PageCount</td>
+                            <td>@document.ArticleCount</td>
+                            <td>
+                                <span class="pill @(ready ? "pill-success" : "pill-warning")">
+                                    <icon name="@(ready ? "check" : "alert")" size="12" />@document.EmbeddedCount / @document.ArticleCount
+                                </span>
+                            </td>
+                            <td class="text-nowrap small text-body-secondary">@document.UploadedAt.ToLocalTime().ToString("g")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 }

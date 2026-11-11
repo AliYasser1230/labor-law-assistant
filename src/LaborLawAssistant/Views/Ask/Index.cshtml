@@ -5,49 +5,80 @@
 
     var countryOptions = Model.AvailableCountries
         .Select(country => new SelectListItem(Localizer[country.GetDisplayName()].Value, ((int)country).ToString()));
+
+    var examples = new[]
+    {
+        Localizer["How many days of annual leave do I get?"].Value,
+        Localizer["How long is maternity leave?"].Value,
+        Localizer["What is the probation period?"].Value,
+    };
 }
 
-<h1 class="h3 mb-4">@Localizer["Ask a question"]</h1>
+<div class="page-header">
+    <h1 class="page-title">@Localizer["Ask a question"]</h1>
+    <p class="page-subtitle">@Localizer["Type your question in Arabic or English. The answer comes only from the law text, with its sources."]</p>
+</div>
 
 @if (Model.AvailableCountries.Count == 0)
 {
-    <div class="alert alert-info">
-        @Localizer["There is no law uploaded yet."]
-        <a asp-controller="Documents" asp-action="Upload">@Localizer["Upload a law PDF"]</a>
+    <div class="card empty-state">
+        <span class="feature-icon mx-auto"><icon name="file" size="26" /></span>
+        <p class="mb-3">@Localizer["There is no law uploaded yet."]</p>
+        <div>
+            <a class="btn btn-primary d-inline-flex align-items-center gap-2" asp-controller="Documents" asp-action="Upload">
+                <icon name="upload" />@Localizer["Upload a law PDF"]
+            </a>
+        </div>
     </div>
 }
 else
 {
-    <form asp-action="Index" method="post" class="card card-body shadow-sm mb-4">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <form asp-action="Index" method="post" class="card ask-card mb-4">
+        <div class="card-body p-3 p-md-4">
+            <div asp-validation-summary="ModelOnly" class="notice notice-danger mb-3"></div>
 
-        <div class="row g-3">
-            <div class="col-md-3">
-                <label asp-for="Country" class="form-label"></label>
-                <select asp-for="Country" asp-items="countryOptions" class="form-select"></select>
-                <span asp-validation-for="Country" class="text-danger"></span>
+            <div class="row g-3">
+                <div class="col-md-4 col-lg-3">
+                    <label asp-for="Country" class="form-label"></label>
+                    <select asp-for="Country" asp-items="countryOptions" class="form-select"></select>
+                    <span asp-validation-for="Country" class="text-danger small"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="Question" class="form-label"></label>
+                    <textarea asp-for="Question" class="form-control" rows="3" dir="auto"
+                              placeholder="@Localizer["Example: How many days of annual leave do I get?"]"></textarea>
+                    <span asp-validation-for="Question" class="text-danger small"></span>
+                </div>
             </div>
-            <div class="col-md-9">
-                <label asp-for="Question" class="form-label"></label>
-                <textarea asp-for="Question" class="form-control" rows="3" dir="auto"
-                          placeholder="@Localizer["Example: How many days of annual leave do I get?"]"></textarea>
-                <span asp-validation-for="Question" class="text-danger"></span>
-            </div>
-        </div>
 
-        <div class="mt-3 d-flex align-items-center gap-2">
-            <button type="submit" id="askButton" class="btn btn-primary">@Localizer["Ask"]</button>
-            <span id="askWaiting" class="small text-body-secondary d-none">
-                <span class="spinner-border spinner-border-sm me-1" aria-hidden="true"></span>
-                @Localizer["Reading the law and writing the answer…"]
-            </span>
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mt-3">
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                    <span class="small text-body-secondary">@Localizer["Try:"]</span>
+                    @foreach (var example in examples)
+                    {
+                        <button type="button" class="example-chip" data-question="@example">@example</button>
+                    }
+                </div>
+                <div class="d-flex align-items-center gap-3 ms-auto">
+                    <span id="askWaiting" class="small text-body-secondary d-none">
+                        <span class="spinner-border spinner-border-sm me-1" aria-hidden="true"></span>
+                        @Localizer["Reading the law and writing the answer…"]
+                    </span>
+                    <button type="submit" id="askButton" class="btn btn-primary px-4 d-inline-flex align-items-center gap-2">
+                        <icon name="send" class="flip-rtl" />@Localizer["Ask"]
+                    </button>
+                </div>
+            </div>
         </div>
     </form>
 }
 
 @if (Model.Result is { Found: false })
 {
-    <div class="alert alert-warning">@Localizer["I couldn't find this in the law. Try asking in a different way."]</div>
+    <div class="notice notice-warning">
+        <icon name="alert" size="20" />
+        <span>@Localizer["I couldn't find this in the law. Try asking in a different way."]</span>
+    </div>
 }
 else if (Model.Result is { Found: true } result)
 {
@@ -55,14 +86,20 @@ else if (Model.Result is { Found: true } result)
 
     @if (Model.Answer is { Refused: true })
     {
-        <div class="alert alert-warning">@Localizer["Claude could not answer this question. Try asking it in a different way."]</div>
+        <div class="notice notice-warning mb-4">
+            <icon name="alert" size="20" />
+            <span>@Localizer["Claude could not answer this question. Try asking it in a different way."]</span>
+        </div>
     }
     else if (Model.Answer is not null)
     {
         <partial name="_Answer" model="Model.Answer" />
     }
 
-    <h2 class="h5 mb-3">@Localizer["Sources: the closest articles in the law"]</h2>
+    <div class="d-flex flex-wrap align-items-baseline justify-content-between gap-2 mb-3">
+        <h2 class="h5 fw-bold mb-0 d-inline-flex align-items-center gap-2"><icon name="book" />@Localizer["Sources"]</h2>
+        <span class="small text-body-secondary">@Localizer["The closest articles in the law"]</span>
+    </div>
     <div class="row row-cols-1 row-cols-lg-2 g-3">
         @for (var i = 0; i < result.Hits.Count; i++)
         {
@@ -79,7 +116,11 @@ else if (Model.Result is { Found: true } result)
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
-        $("form").on("submit", function () {
+        $(".example-chip").on("click", function () {
+            $("#Question").val($(this).data("question")).trigger("focus");
+        });
+
+        $("form.ask-card").on("submit", function () {
             if ($(this).valid()) {
                 $("#askButton").prop("disabled", true);
                 $("#askWaiting").removeClass("d-none");

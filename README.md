@@ -66,7 +66,8 @@ A step-by-step explanation with flowcharts is in [docs/system-flow.pdf](docs/sys
 - **EF Core + SQLite:** the database is a single file, `laborlaw.db`
 - **Semantic search:** cosine similarity in C# between the question's embedding and every article's embedding
 - **PdfPig:** reads the text of PDF files
-- **Bootstrap 5.3:** layout, right-to-left support for Arabic, dark mode
+- **Bootstrap 5.3** with a custom theme (CSS variables): right-to-left support for Arabic, light and dark mode
+- **Custom Tag Helper** (`<icon name="..." />`) for the line icons, so no icon library is needed
 - **Voyage AI** (`voyage-4`): embeddings, 1024 numbers per article, called through a typed `HttpClient`
 - **Claude API** (`claude-opus-5-5`, official Anthropic C# SDK): answers with citations, so each part of the answer is linked to the article it comes from
 
@@ -142,11 +143,12 @@ The database, the uploaded PDFs and the keys are not part of the repository.
 
 ```
 src/LaborLawAssistant/
-├── Controllers/    Home, Documents (list, upload, articles), Ask, History, Language
+├── Controllers/    Home, Documents (list, upload, articles), Ask (search + answer), History, Language
 ├── Models/         Database tables: LawDocument, LawArticle, QuestionLog, Country
 ├── ViewModels/     Data for the pages and forms (with validation rules)
 ├── Validation/     Custom validation: PdfFile, MaxFileSize
-├── Services/       DocumentStorage, PdfTextExtractor, ArticleSplitter, LawDocumentImporter
+├── Services/       Storage, PDF reading, article splitting, embeddings, search, answers
+├── TagHelpers/     IconTagHelper (<icon> → inline SVG)
 ├── Data/           AppDbContext (EF Core)
 ├── Migrations/     Database changes (EF Core migrations)
 ├── Resources/      Arabic translations

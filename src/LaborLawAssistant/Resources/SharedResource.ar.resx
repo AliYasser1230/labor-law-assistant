@@ -35,9 +35,6 @@
     <value>هذه معلومات، وليست استشارة قانونية.</value>
   </data>
 
-  <data name="Ask labor law questions in Arabic or English. Every answer shows its source: the law, the article, and the page." xml:space="preserve">
-    <value>اسأل عن قانون العمل بالعربية أو الإنجليزية. كل إجابة تعرض مصدرها: القانون، والمادة، والصفحة.</value>
-  </data>
   <data name="Available now: {0}" xml:space="preserve">
     <value>متوفر الآن: {0}</value>
   </data>
@@ -125,9 +122,6 @@
     <value>لم يتم العثور على أي مادة في هذا الملف. هل هو ملف PDF نصي (وليس صورة ممسوحة ضوئياً)؟</value>
   </data>
 
-  <data name="{0} pages · {1} articles" xml:space="preserve">
-    <value>{0} صفحة · {1} مادة</value>
-  </data>
   <data name="Article {0}" xml:space="preserve">
     <value>المادة {0}</value>
   </data>
@@ -140,9 +134,6 @@
 
   <data name="Embeddings" xml:space="preserve">
     <value>التضمينات</value>
-  </data>
-  <data name="Embeddings: {0} / {1}" xml:space="preserve">
-    <value>التضمينات: {0} / {1}</value>
   </data>
   <data name="This can take a few minutes." xml:space="preserve">
     <value>قد يستغرق هذا بضع دقائق.</value>
@@ -197,9 +188,6 @@
   <data name="Cited in the answer" xml:space="preserve">
     <value>مذكورة في الإجابة</value>
   </data>
-  <data name="Sources: the closest articles in the law" xml:space="preserve">
-    <value>المصادر: أقرب المواد في القانون</value>
-  </data>
   <data name="{0} input + {1} output tokens" xml:space="preserve">
     <value>{0} رمز مُدخل + {1} رمز مُخرج</value>
   </data>
@@ -220,7 +208,91 @@
     <value>التالي</value>
   </data>
 
-  <data name="Coming soon (step {0})." xml:space="preserve">
-    <value>قريباً (الخطوة {0}).</value>
+  <data name="Answers to your labor law questions, from the law itself" xml:space="preserve">
+    <value>إجابات لأسئلتك عن قانون العمل، من نص القانون نفسه</value>
+  </data>
+  <data name="Ask in Arabic or English. Every answer is written from the official law text and shows its source: the law, the article, and the page." xml:space="preserve">
+    <value>اسأل بالعربية أو الإنجليزية. كل إجابة مكتوبة من نص القانون الرسمي وتعرض مصدرها: القانون، والمادة، والصفحة.</value>
+  </data>
+  <data name="Browse the law" xml:space="preserve">
+    <value>تصفّح القانون</value>
+  </data>
+  <data name="Finds the right articles" xml:space="preserve">
+    <value>يجد المواد المناسبة</value>
+  </data>
+  <data name="Your question is matched by meaning with every article of the law, in Arabic or English." xml:space="preserve">
+    <value>يُطابَق سؤالك من حيث المعنى مع كل مادة في القانون، بالعربية أو الإنجليزية.</value>
+  </data>
+  <data name="Answers only from the law" xml:space="preserve">
+    <value>إجابات من القانون فقط</value>
+  </data>
+  <data name="The answer is written only from those articles. If the law does not cover your question, the app says so." xml:space="preserve">
+    <value>تُكتب الإجابة من هذه المواد فقط. وإذا لم يتناول القانون سؤالك، يخبرك التطبيق بذلك.</value>
+  </data>
+  <data name="Always shows the source" xml:space="preserve">
+    <value>يعرض المصدر دائماً</value>
+  </data>
+  <data name="Each part of the answer links to its article and page, so you can check it yourself." xml:space="preserve">
+    <value>كل جزء من الإجابة مرتبط بمادته وصفحتها، لتتحقق منه بنفسك.</value>
+  </data>
+  <data name="How it works" xml:space="preserve">
+    <value>كيف يعمل</value>
+  </data>
+  <data name="Ask your question" xml:space="preserve">
+    <value>اطرح سؤالك</value>
+  </data>
+  <data name="Choose the country and type your question." xml:space="preserve">
+    <value>اختر الدولة واكتب سؤالك.</value>
+  </data>
+  <data name="The closest articles are found" xml:space="preserve">
+    <value>يتم العثور على أقرب المواد</value>
+  </data>
+  <data name="The app compares your question with every article of the law." xml:space="preserve">
+    <value>يقارن التطبيق سؤالك بكل مادة في القانون.</value>
+  </data>
+  <data name="Get an answer with sources" xml:space="preserve">
+    <value>احصل على إجابة مع المصادر</value>
+  </data>
+  <data name="Each part of the answer cites the article and page it comes from." xml:space="preserve">
+    <value>كل جزء من الإجابة يذكر المادة والصفحة التي جاء منها.</value>
+  </data>
+  <data name="Answers come from the official law text, with the article and page." xml:space="preserve">
+    <value>الإجابات من نص القانون الرسمي، مع المادة والصفحة.</value>
+  </data>
+  <data name="Type your question in Arabic or English. The answer comes only from the law text, with its sources." xml:space="preserve">
+    <value>اكتب سؤالك بالعربية أو الإنجليزية. تأتي الإجابة من نص القانون فقط، مع مصادرها.</value>
+  </data>
+  <data name="Try:" xml:space="preserve">
+    <value>جرّب:</value>
+  </data>
+  <data name="How many days of annual leave do I get?" xml:space="preserve">
+    <value>كم يوماً من الإجازة السنوية أستحق؟</value>
+  </data>
+  <data name="How long is maternity leave?" xml:space="preserve">
+    <value>كم مدة إجازة الأمومة؟</value>
+  </data>
+  <data name="What is the probation period?" xml:space="preserve">
+    <value>ما هي مدة فترة التجربة؟</value>
+  </data>
+  <data name="Sources" xml:space="preserve">
+    <value>المصادر</value>
+  </data>
+  <data name="The closest articles in the law" xml:space="preserve">
+    <value>أقرب المواد في القانون</value>
+  </data>
+  <data name="The laws the assistant can answer from." xml:space="preserve">
+    <value>القوانين التي يجيب منها المساعد.</value>
+  </data>
+  <data name="Upload a law to start." xml:space="preserve">
+    <value>ارفع قانوناً للبدء.</value>
+  </data>
+  <data name="Upload the official law PDF. The app reads it, finds every article, and prepares it for questions." xml:space="preserve">
+    <value>ارفع ملف PDF الرسمي للقانون. يقرأه التطبيق ويجد كل مادة ويجهّزه للأسئلة.</value>
+  </data>
+  <data name="History is coming soon." xml:space="preserve">
+    <value>السجل قادم قريباً.</value>
+  </data>
+  <data name="Every question you ask is already saved with its answer and cost." xml:space="preserve">
+    <value>كل سؤال تطرحه محفوظ بالفعل مع إجابته وتكلفته.</value>
   </data>
 </root>

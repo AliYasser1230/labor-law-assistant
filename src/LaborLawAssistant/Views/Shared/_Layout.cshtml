@@ -1,9 +1,7 @@
 ﻿@using System.Globalization
 @{
     var isArabic = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ar";
-
     var currentController = ViewContext.RouteData.Values["controller"] as string;
-
     var returnUrl = $"~{Context.Request.Path}{Context.Request.QueryString}";
 }
 <!DOCTYPE html>
@@ -29,41 +27,50 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     }
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/LaborLawAssistant.styles.css" asp-append-version="true" />
 </head>
 <body class="d-flex flex-column min-vh-100">
-    <header>
-        <nav class="navbar navbar-expand-sm bg-body border-bottom box-shadow mb-4">
+    <header class="app-navbar">
+        <nav class="navbar navbar-expand-md py-2">
             <div class="container">
-                <a class="navbar-brand fw-semibold" asp-controller="Home" asp-action="Index">⚖️ @Localizer["Labor Law Assistant"]</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu"
+                <a class="app-brand" asp-controller="Home" asp-action="Index">
+                    <span class="app-brand-mark"><icon name="scale" size="20" /></span>
+                    <span>@Localizer["Labor Law Assistant"]</span>
+                </a>
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu"
                         aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="mainMenu">
-                    <ul class="navbar-nav me-auto">
+                    <ul class="navbar-nav gap-md-1 ms-md-4 my-2 my-md-0 me-auto">
                         <li class="nav-item">
-                            <a class="nav-link @(currentController == "Ask" ? "active" : "")" asp-controller="Ask" asp-action="Index">@Localizer["Ask"]</a>
+                            <a class="nav-link @(currentController == "Ask" ? "active" : "")" asp-controller="Ask" asp-action="Index">
+                                <icon name="message" size="17" />@Localizer["Ask"]
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @(currentController == "Documents" ? "active" : "")" asp-controller="Documents" asp-action="Index">@Localizer["Documents"]</a>
+                            <a class="nav-link @(currentController == "Documents" ? "active" : "")" asp-controller="Documents" asp-action="Index">
+                                <icon name="file" size="17" />@Localizer["Documents"]
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @(currentController == "History" ? "active" : "")" asp-controller="History" asp-action="Index">@Localizer["History"]</a>
+                            <a class="nav-link @(currentController == "History" ? "active" : "")" asp-controller="History" asp-action="Index">
+                                <icon name="clock" size="17" />@Localizer["History"]
+                            </a>
                         </li>
                     </ul>
 
-                    <div class="d-flex align-items-center gap-2">
-                        <button type="button" id="themeToggle" class="btn btn-outline-secondary btn-sm"
+                    <div class="d-flex align-items-center gap-2 pb-2 pb-md-0">
+                        <button type="button" id="themeToggle" class="btn-icon"
                                 title="@Localizer["Switch light / dark mode"]" aria-label="@Localizer["Switch light / dark mode"]">
-                            <span class="theme-icon-for-light">🌙</span>
-                            <span class="theme-icon-for-dark">☀️</span>
+                            <icon name="moon" class="theme-icon-for-light" />
+                            <icon name="sun" class="theme-icon-for-dark" />
                         </button>
 
                         <form asp-controller="Language" asp-action="Set" method="post">
                             <input type="hidden" name="returnUrl" value="@returnUrl" />
-                            <button type="submit" name="culture" value="@(isArabic ? "en" : "ar")" class="btn btn-outline-secondary btn-sm">
-                                @(isArabic ? "English" : "العربية")
+                            <button type="submit" name="culture" value="@(isArabic ? "en" : "ar")" class="btn-icon">
+                                <icon name="globe" size="17" />
+                                <span>@(isArabic ? "English" : "العربية")</span>
                             </button>
                         </form>
                     </div>
@@ -72,13 +79,16 @@
         </nav>
     </header>
 
-    <main role="main" class="container flex-grow-1 pb-4">
+    <main role="main" class="container flex-grow-1 py-4 py-md-5">
         @RenderBody()
     </main>
 
-    <footer class="border-top py-3 bg-body-tertiary">
-        <div class="container text-muted small">
-            ⚠️ @Localizer["This is information, not legal advice."]
+    <footer class="app-footer py-4">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span class="d-inline-flex align-items-center gap-2">
+                <icon name="alert" size="16" />@Localizer["This is information, not legal advice."]
+            </span>
+            <span>@Localizer["Answers come from the official law text, with the article and page."]</span>
         </div>
     </footer>
 

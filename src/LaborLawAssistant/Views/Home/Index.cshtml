@@ -3,22 +3,79 @@
     ViewData["Title"] = Localizer["Home"];
 }
 
-<div class="py-5 text-center">
-    <h1 class="display-5 fw-bold mb-3">⚖️ @Localizer["Labor Law Assistant"]</h1>
-    <div class="col-lg-8 mx-auto">
-        <p class="lead mb-2">
-            @Localizer["Ask labor law questions in Arabic or English. Every answer shows its source: the law, the article, and the page."]
-        </p>
-        <p class="text-muted mb-4">
-            @if (Model.Count > 0)
-            {
-                @Localizer["Available now: {0}", string.Join(" · ", Model.Select(country => Localizer[country.GetDisplayName()].Value))]
-            }
-            else
-            {
-                @Localizer["No laws uploaded yet."]
-            }
-        </p>
-        <a class="btn btn-primary btn-lg px-4" asp-controller="Ask" asp-action="Index">@Localizer["Ask a question"]</a>
+<section class="hero mb-5">
+    @if (Model.Count > 0)
+    {
+        <span class="chip mb-4">
+            <icon name="check" size="15" />
+            @Localizer["Available now: {0}", string.Join(" · ", Model.Select(country => Localizer[country.GetDisplayName()].Value))]
+        </span>
+    }
+    <h1 class="hero-title">@Localizer["Answers to your labor law questions, from the law itself"]</h1>
+    <p class="hero-lead">@Localizer["Ask in Arabic or English. Every answer is written from the official law text and shows its source: the law, the article, and the page."]</p>
+    <div class="d-flex flex-wrap justify-content-center gap-2">
+        <a class="btn btn-primary btn-lg px-4 d-inline-flex align-items-center gap-2" asp-controller="Ask" asp-action="Index">
+            <icon name="message" />@Localizer["Ask a question"]
+        </a>
+        <a class="btn btn-soft btn-lg px-4 d-inline-flex align-items-center gap-2" asp-controller="Documents" asp-action="Index">
+            <icon name="book" />@Localizer["Browse the law"]
+        </a>
     </div>
-</div>
+</section>
+
+<section class="row row-cols-1 row-cols-md-3 g-3 mb-5">
+    <div class="col">
+        <div class="card h-100 p-4">
+            <span class="feature-icon"><icon name="search" size="22" /></span>
+            <h2 class="h5 fw-semibold">@Localizer["Finds the right articles"]</h2>
+            <p class="text-body-secondary mb-0">@Localizer["Your question is matched by meaning with every article of the law, in Arabic or English."]</p>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100 p-4">
+            <span class="feature-icon"><icon name="sparkles" size="22" /></span>
+            <h2 class="h5 fw-semibold">@Localizer["Answers only from the law"]</h2>
+            <p class="text-body-secondary mb-0">@Localizer["The answer is written only from those articles. If the law does not cover your question, the app says so."]</p>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100 p-4">
+            <span class="feature-icon"><icon name="book" size="22" /></span>
+            <h2 class="h5 fw-semibold">@Localizer["Always shows the source"]</h2>
+            <p class="text-body-secondary mb-0">@Localizer["Each part of the answer links to its article and page, so you can check it yourself."]</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2 class="h4 fw-bold text-center mb-4">@Localizer["How it works"]</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-3">
+        <div class="col">
+            <div class="card h-100 p-4 d-flex flex-row gap-3">
+                <span class="step-number">1</span>
+                <div>
+                    <h3 class="h6 fw-semibold mb-1">@Localizer["Ask your question"]</h3>
+                    <p class="text-body-secondary small mb-0">@Localizer["Choose the country and type your question."]</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 p-4 d-flex flex-row gap-3">
+                <span class="step-number">2</span>
+                <div>
+                    <h3 class="h6 fw-semibold mb-1">@Localizer["The closest articles are found"]</h3>
+                    <p class="text-body-secondary small mb-0">@Localizer["The app compares your question with every article of the law."]</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 p-4 d-flex flex-row gap-3">
+                <span class="step-number">3</span>
+                <div>
+                    <h3 class="h6 fw-semibold mb-1">@Localizer["Get an answer with sources"]</h3>
+                    <p class="text-body-secondary small mb-0">@Localizer["Each part of the answer cites the article and page it comes from."]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

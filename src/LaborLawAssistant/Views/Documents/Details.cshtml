@@ -1,41 +1,77 @@
 @model DocumentDetailsViewModel
 @{
     ViewData["Title"] = Model.Title;
+    var ready = Model.EmbeddedCount == Model.Articles.TotalCount;
 }
 
-<div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
-    <div>
-        <h1 class="h3 mb-1">@Model.Title</h1>
-        <p class="text-muted mb-0">
-            @Html.DisplayFor(_ => Model.Country) · @Localizer["{0} pages · {1} articles", Model.PageCount, Model.Articles.TotalCount]
-        </p>
+<a asp-action="Index" class="back-link"><icon name="arrow-left" size="16" class="flip-rtl" />@Localizer["Back to documents"]</a>
+
+<div class="page-header">
+    <h1 class="page-title">@Model.Title</h1>
+    <p class="page-subtitle">@Html.DisplayFor(_ => Model.Country)</p>
+</div>
+
+<div class="row row-cols-1 row-cols-sm-3 g-3 mb-4">
+    <div class="col">
+        <div class="card stat h-100">
+            <span class="feature-icon"><icon name="file" size="20" /></span>
+            <div>
+                <div class="stat-value">@Model.PageCount</div>
+                <div class="stat-label">@Localizer["Pages"]</div>
+            </div>
+        </div>
     </div>
-    <a asp-action="Index" class="btn btn-outline-secondary btn-sm">@Localizer["Back to documents"]</a>
+    <div class="col">
+        <div class="card stat h-100">
+            <span class="feature-icon"><icon name="book" size="20" /></span>
+            <div>
+                <div class="stat-value">@Model.Articles.TotalCount</div>
+                <div class="stat-label">@Localizer["Articles"]</div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card stat h-100">
+            <span class="feature-icon @(ready ? "feature-icon-success" : "feature-icon-warning")"><icon name="@(ready ? "check" : "alert")" size="20" /></span>
+            <div>
+                <div class="stat-value">@Model.EmbeddedCount <span class="fs-6 fw-normal text-body-secondary">/ @Model.Articles.TotalCount</span></div>
+                <div class="stat-label">@Localizer["Embeddings"]</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @if (TempData["EmbeddedCount"] is int embeddedNow)
 {
-    <div class="alert alert-success">@Localizer["Embeddings created for {0} articles.", embeddedNow]</div>
+    <div class="notice notice-success mb-3">
+        <icon name="check" size="20" />
+        <span>@Localizer["Embeddings created for {0} articles.", embeddedNow]</span>
+    </div>
 }
 @if (TempData["EmbeddingsFailed"] is true)
 {
-    <div class="alert alert-danger">@Localizer["The embeddings could not be created. Check the Voyage AI API key and the internet connection, then try again."]</div>
+    <div class="notice notice-danger mb-3">
+        <icon name="alert" size="20" />
+        <span>@Localizer["The embeddings could not be created. Check the Voyage AI API key and the internet connection, then try again."]</span>
+    </div>
 }
 
-@if (Model.EmbeddedCount < Model.Articles.TotalCount)
+@if (!ready)
 {
-    <div class="alert alert-warning d-flex flex-wrap justify-content-between align-items-center gap-2">
-        <span>@Localizer["{0} of {1} articles have embeddings. Questions can only find articles that have one.", Model.EmbeddedCount, Model.Articles.TotalCount]</span>
+    <div class="notice notice-warning flex-wrap justify-content-between align-items-center mb-4">
+        <span class="d-inline-flex align-items-center gap-2">
+            <icon name="alert" size="20" />
+            @Localizer["{0} of {1} articles have embeddings. Questions can only find articles that have one.", Model.EmbeddedCount, Model.Articles.TotalCount]
+        </span>
         <form asp-action="Embed" asp-route-id="@Model.Id" method="post" class="d-flex align-items-center gap-2">
-            <span class="small text-body-secondary">@Localizer["This can take a few minutes."]</span>
-            <button type="submit" class="btn btn-warning btn-sm">@Localizer["Create embeddings"]</button>
+            <span class="small">@Localizer["This can take a few minutes."]</span>
+            <button type="submit" class="btn btn-primary btn-sm">@Localizer["Create embeddings"]</button>
         </form>
     </div>
 }
 
-<p class="small text-muted mb-3">
+<p class="small text-body-secondary mb-3">
     @Localizer["Showing articles {0}–{1} of {2}", Model.Articles.FirstItemNumber, Model.Articles.LastItemNumber, Model.Articles.TotalCount]
-    · @Localizer["Embeddings: {0} / {1}", Model.EmbeddedCount, Model.Articles.TotalCount]
 </p>
 
 <div class="row row-cols-1 row-cols-lg-2 g-3 mb-4">

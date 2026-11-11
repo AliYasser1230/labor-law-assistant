@@ -1,24 +1,24 @@
 @model ArticleCardViewModel
-<section class="card h-100 shadow-sm @(Model.IsCited ? "border-success" : "")"
+<section class="card article-card h-100 @(Model.IsCited ? "is-cited" : "")"
          id="@(Model.SourceNumber is int number ? $"source-{number}" : null)">
     <div class="card-header d-flex justify-content-between align-items-center gap-2">
-        <span class="fw-semibold">
+        <span class="d-inline-flex align-items-center gap-2 fw-semibold">
             @if (Model.SourceNumber is int sourceNumber)
             {
-                <span class="badge text-bg-secondary me-1">@sourceNumber</span>
+                <span class="source-number">@sourceNumber</span>
             }
             @Localizer["Article {0}", Model.Article.ArticleNumber]
         </span>
         <span class="d-flex flex-wrap justify-content-end gap-1">
             @if (Model.IsCited)
             {
-                <span class="badge text-bg-success">@Localizer["Cited in the answer"]</span>
+                <span class="pill pill-primary"><icon name="check" size="12" />@Localizer["Cited in the answer"]</span>
             }
             @if (Model.Score is double score)
             {
-                <span class="badge bg-body-secondary text-body border">@Localizer["{0}% match", Math.Round(score * 100)]</span>
+                <span class="pill">@Localizer["{0}% match", Math.Round(score * 100)]</span>
             }
-            <span class="badge bg-body-secondary text-body border">@Localizer["Page {0}", Model.Article.PageNumber]</span>
+            <span class="pill">@Localizer["Page {0}", Model.Article.PageNumber]</span>
         </span>
     </div>
     <div class="card-body" dir="ltr">
@@ -28,7 +28,7 @@
         }
         @if (Model.Article.Heading is not null)
         {
-            <h2 class="h6 card-title">@Model.Article.Heading</h2>
+            <h3 class="article-heading">@Model.Article.Heading</h3>
         }
         <div class="law-text article-text small">@Model.Article.Text</div>
     </div>
