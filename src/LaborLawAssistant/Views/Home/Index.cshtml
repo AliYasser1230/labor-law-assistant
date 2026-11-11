@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = Localizer["Home"];
+}
+
+<div class="py-5 text-center">
+    <h1 class="display-5 fw-bold mb-3">⚖️ @Localizer["Labor Law Assistant"]</h1>
+    <div class="col-lg-8 mx-auto">
+        <p class="lead mb-2">
+            @Localizer["Ask labor law questions in Arabic or English. Every answer shows its source: the law, the article, and the page."]
+        </p>
+        <p class="text-muted mb-4">🇸🇦 @Localizer["Available now: Saudi Labor Law"]</p>
+        <a class="btn btn-primary btn-lg px-4" asp-controller="Ask" asp-action="Index">@Localizer["Ask a question"]</a>
+    </div>
+</div>

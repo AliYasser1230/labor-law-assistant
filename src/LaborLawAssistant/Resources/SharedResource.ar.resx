@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Arabic translations for the whole app.
+  name  = the English text (the same text we write in the views)
+  value = the Arabic text shown when the user picks Arabic
+  If a text is missing here, the English text is shown.
+-->
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <!-- Layout: header, menu, footer -->
+  <data name="Labor Law Assistant" xml:space="preserve">
+    <value>مساعد قانون العمل</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>الرئيسية</value>
+  </data>
+  <data name="Ask" xml:space="preserve">
+    <value>اسأل</value>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>المستندات</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>السجل</value>
+  </data>
+  <data name="This is information, not legal advice." xml:space="preserve">
+    <value>هذه معلومات، وليست استشارة قانونية.</value>
+  </data>
+
+  <!-- Home page -->
+  <data name="Ask labor law questions in Arabic or English. Every answer shows its source: the law, the article, and the page." xml:space="preserve">
+    <value>اسأل عن قانون العمل بالعربية أو الإنجليزية. كل إجابة تعرض مصدرها: القانون، والمادة، والصفحة.</value>
+  </data>
+  <data name="Available now: Saudi Labor Law" xml:space="preserve">
+    <value>متوفر الآن: نظام العمل السعودي</value>
+  </data>
+  <data name="Ask a question" xml:space="preserve">
+    <value>اطرح سؤالاً</value>
+  </data>
+
+  <!-- Placeholder pages -->
+  <data name="Coming soon (step {0})." xml:space="preserve">
+    <value>قريباً (الخطوة {0}).</value>
+  </data>
+</root>
