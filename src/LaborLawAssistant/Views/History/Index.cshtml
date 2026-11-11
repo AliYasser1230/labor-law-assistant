@@ -1,13 +1,109 @@
+@using System.Globalization
+@model HistoryPageViewModel
 @{
     ViewData["Title"] = Localizer["History"];
 }
 
 <div class="page-header">
     <h1 class="page-title">@ViewData["Title"]</h1>
+    <p class="page-subtitle">@Localizer["Every question that was asked, with its answer, time and cost."]</p>
 </div>
 
-<div class="card empty-state">
-    <span class="feature-icon mx-auto"><icon name="clock" size="26" /></span>
-    <p class="mb-1 fw-semibold text-body">@Localizer["History is coming soon."]</p>
-    <p class="mb-0">@Localizer["Every question you ask is already saved with its answer and cost."]</p>
-</div>
+@if (Model.TotalQuestions == 0)
+{
+    <div class="card empty-state">
+        <span class="feature-icon mx-auto"><icon name="clock" size="26" /></span>
+        <p class="mb-1 fw-semibold text-body">@Localizer["No questions yet."]</p>
+        <p class="mb-3">@Localizer["Ask your first question and it will appear here."]</p>
+        <div>
+            <a class="btn btn-primary d-inline-flex align-items-center gap-2" asp-controller="Ask" asp-action="Index">
+                <icon name="message" />@Localizer["Ask a question"]
+            </a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-sm-3 g-3 mb-4">
+        <div class="col">
+            <div class="card stat h-100">
+                <span class="feature-icon"><icon name="message" size="20" /></span>
+                <div>
+                    <div class="stat-value">@Model.TotalQuestions</div>
+                    <div class="stat-label">@Localizer["Questions"]</div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card stat h-100">
+                <span class="feature-icon feature-icon-success"><icon name="check" size="20" /></span>
+                <div>
+                    <div class="stat-value">@Model.AnsweredQuestions</div>
+                    <div class="stat-label">@Localizer["Answered from the law"]</div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card stat h-100">
+                <span class="feature-icon"><icon name="coins" size="20" /></span>
+                <div>
+                    <div class="stat-value">$@Model.TotalCostUsd.ToString("0.00", CultureInfo.InvariantCulture)</div>
+                    <div class="stat-label">@Localizer["Total cost"]</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p class="small text-body-secondary mb-3">
+        @Localizer["Showing questions {0}–{1} of {2}", Model.Items.FirstItemNumber, Model.Items.LastItemNumber, Model.Items.TotalCount]
+    </p>
+
+    @foreach (var item in Model.Items.Items)
+    {
+        <article class="card history-item mb-3">
+            <div class="card-body p-3 p-md-4">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                    <div class="d-flex flex-wrap align-items-center gap-2">
+                        <span class="pill">@Localizer[item.Country.GetDisplayName()]</span>
+                        @if (item.WasAnswered)
+                        {
+                            <span class="pill pill-success"><icon name="check" size="12" />@Localizer["Answered"]</span>
+                        }
+                        else
+                        {
+                            <span class="pill pill-warning"><icon name="alert" size="12" />@Localizer["Not found in the law"]</span>
+                        }
+                    </div>
+                    <span class="small text-body-secondary d-inline-flex align-items-center gap-1">
+                        <icon name="clock" size="14" />@item.AskedAt.ToLocalTime().ToString("g")
+                    </span>
+                </div>
+
+                <h2 class="h6 fw-semibold mb-2" dir="auto">@item.Question</h2>
+
+                @if (item.WasAnswered)
+                {
+                    <p class="answer-preview small text-body-secondary mb-2" dir="auto">@item.Preview</p>
+                    <details class="history-answer">
+                        <summary class="small fw-semibold">@Localizer["Full answer"]</summary>
+                        <div class="answer-text small mt-2" dir="auto">@item.Answer</div>
+                    </details>
+                }
+                else
+                {
+                    <p class="small text-body-secondary mb-0">@Localizer["I couldn't find this in the law. Try asking in a different way."]</p>
+                }
+
+                @if (item.WasAnswered)
+                {
+                    <div class="answer-meta">
+                        <span>@Localizer["{0} input + {1} output tokens", item.InputTokens, item.OutputTokens]</span>
+                        <span>$@item.CostUsd.ToString("0.0000", CultureInfo.InvariantCulture)</span>
+                    </div>
+                }
+            </div>
+        </article>
+    }
+
+    <partial name="_Pagination" model="Model.Items.Pagination" />
+}

@@ -289,10 +289,37 @@
   <data name="Upload the official law PDF. The app reads it, finds every article, and prepares it for questions." xml:space="preserve">
     <value>ارفع ملف PDF الرسمي للقانون. يقرأه التطبيق ويجد كل مادة ويجهّزه للأسئلة.</value>
   </data>
-  <data name="History is coming soon." xml:space="preserve">
-    <value>السجل قادم قريباً.</value>
+  <data name="Drag and drop the PDF here, or click to choose a file" xml:space="preserve">
+    <value>اسحب ملف PDF وأفلته هنا، أو اضغط لاختيار ملف</value>
   </data>
-  <data name="Every question you ask is already saved with its answer and cost." xml:space="preserve">
-    <value>كل سؤال تطرحه محفوظ بالفعل مع إجابته وتكلفته.</value>
+  <data name="Every question that was asked, with its answer, time and cost." xml:space="preserve">
+    <value>كل سؤال تم طرحه، مع إجابته ووقته وتكلفته.</value>
+  </data>
+  <data name="No questions yet." xml:space="preserve">
+    <value>لا توجد أسئلة بعد.</value>
+  </data>
+  <data name="Ask your first question and it will appear here." xml:space="preserve">
+    <value>اطرح سؤالك الأول وسيظهر هنا.</value>
+  </data>
+  <data name="Questions" xml:space="preserve">
+    <value>الأسئلة</value>
+  </data>
+  <data name="Answered from the law" xml:space="preserve">
+    <value>أُجيب عنها من القانون</value>
+  </data>
+  <data name="Total cost" xml:space="preserve">
+    <value>التكلفة الإجمالية</value>
+  </data>
+  <data name="Showing questions {0}–{1} of {2}" xml:space="preserve">
+    <value>عرض الأسئلة {0}–{1} من {2}</value>
+  </data>
+  <data name="Answered" xml:space="preserve">
+    <value>تمت الإجابة</value>
+  </data>
+  <data name="Not found in the law" xml:space="preserve">
+    <value>غير موجود في القانون</value>
+  </data>
+  <data name="Full answer" xml:space="preserve">
+    <value>الإجابة كاملة</value>
   </data>
 </root>

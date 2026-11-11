@@ -9,9 +9,14 @@
 {
     <nav aria-label="@Localizer["Pages"]">
         <ul class="pagination justify-content-center flex-wrap">
-            <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
-                <a class="page-link" href="@Url.Action(null, new { page = Model.PageNumber - 1 })">@Localizer["Previous"]</a>
-            </li>
+            @if (Model.PageNumber == 1)
+            {
+                <li class="page-item disabled"><span class="page-link">@Localizer["Previous"]</span></li>
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link" href="@Url.Action(null, new { page = Model.PageNumber - 1 })">@Localizer["Previous"]</a></li>
+            }
 
             @for (var i = 0; i < numbers.Count; i++)
             {
@@ -31,9 +36,14 @@
                 }
             }
 
-            <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
-                <a class="page-link" href="@Url.Action(null, new { page = Model.PageNumber + 1 })">@Localizer["Next"]</a>
-            </li>
+            @if (Model.PageNumber == Model.TotalPages)
+            {
+                <li class="page-item disabled"><span class="page-link">@Localizer["Next"]</span></li>
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link" href="@Url.Action(null, new { page = Model.PageNumber + 1 })">@Localizer["Next"]</a></li>
+            }
         </ul>
     </nav>
 }

@@ -576,15 +576,91 @@ h1, h2, h3, .h1, .h2, .h3, .h4, .h5 {
 }
 
 .dropzone {
-  padding: 1.5rem;
+  display: block;
+  padding: 2rem 1.5rem;
   border: 2px dashed var(--app-border);
   border-radius: 1rem;
   text-align: center;
   background: var(--bs-tertiary-bg);
+  cursor: pointer;
+  transition: border-color .15s ease, background-color .15s ease;
 }
 
-.dropzone:focus-within {
+.dropzone:hover,
+.dropzone:focus-within,
+.dropzone.is-dragover {
   border-color: var(--app-primary);
+  background: var(--app-primary-subtle);
+}
+
+.dropzone.is-dragover * {
+  pointer-events: none;
+}
+
+.dropzone.has-file {
+  border-style: solid;
+  border-color: var(--app-success-text);
+  background: var(--app-success-subtle);
+}
+
+.dropzone:has(.input-validation-error),
+.dropzone.has-file:has(.input-validation-error) {
+  border-color: var(--bs-danger);
+  background: rgba(220, 53, 69, .07);
+}
+
+.dropzone:has(.input-validation-error) .dropzone-file {
+  color: var(--bs-danger);
+}
+
+.dropzone-file {
+  color: var(--app-success-text);
+  word-break: break-all;
+}
+
+.answer-preview {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.history-item:has(details[open]) .answer-preview {
+  display: none;
+}
+
+.history-answer .answer-text {
+  font-size: .925rem;
+  line-height: 1.75;
+}
+
+.history-answer > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  color: var(--app-primary-text);
+  cursor: pointer;
+  list-style: none;
+}
+
+.history-answer > summary::-webkit-details-marker {
+  display: none;
+}
+
+.history-answer > summary::after {
+  content: "";
+  width: .45rem;
+  height: .45rem;
+  margin-top: -.2rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform .15s ease;
+}
+
+.history-answer[open] > summary::after {
+  margin-top: .2rem;
+  transform: rotate(-135deg);
 }
 
 .empty-state {

@@ -19,7 +19,7 @@ It uses **RAG** (Retrieval-Augmented Generation): the app first finds the law ar
 | Embeddings for every article (Voyage AI) | ✅ Done |
 | Ask a question → find the 5 closest articles (works across Arabic and English) | ✅ Done |
 | Claude writes the answer from those articles, each part linked to its source article | ✅ Done |
-| History page (every question is already saved with its answer, tokens and cost) | 🔄 Next |
+| History page: every question with its answer, time, tokens and cost (with pagination) | ✅ Done |
 
 The law included for now is the **UAE Labour Law** (Federal Decree-Law No. 33 of 2021, English). You can upload other labor laws (for example Saudi Arabia) with no code change.
 
@@ -127,7 +127,8 @@ Open **http://localhost:5190** in your browser.
    - The **Embeddings** column shows how many articles are ready for questions (for example ✅ 74 / 74).
 2. **Check the articles:** on the **Documents** page, click the law's title. Each article is shown as a card with its number, title, page and text, 12 articles per page.
 3. **Ask a question:** on the **Ask** page, choose the country and type your question in Arabic or English. Claude writes the answer using only the 5 law articles closest to your question, in the language of your question. The numbers like **1** after each part link to the source article below. The answer also shows the tokens used and the cost. If no article is close enough, the app says it couldn't find this in the law (and does not call Claude).
-4. **Language and theme:** use the **العربية / English** button to switch the language, and **🌙 / ☀️** to switch between light and dark mode.
+4. **See the history:** the **History** page lists every question (newest first) with its answer, the time, the tokens and the cost, plus the total cost of all questions.
+5. **Language and theme:** use the **العربية / English** button to switch the language, and **🌙 / ☀️** to switch between light and dark mode.
 
 ## Where the data is saved
 
@@ -158,7 +159,6 @@ src/LaborLawAssistant/
 
 ## Roadmap
 
-- History page (question, answer, time, cost)
 - More countries (Saudi Arabia, Egypt)
 - Admin login, Docker, and deployment to Google Cloud Run
 
