@@ -79,13 +79,14 @@ git clone https://github.com/AliYasser1230/labor-law-assistant.git
 cd labor-law-assistant/src/LaborLawAssistant
 ```
 
-### 3. Create the database
+### 3. Build and create the database
 
 ```bash
+dotnet build
 dotnet ef database update
 ```
 
-This creates `laborlaw.db` with all the tables.
+`dotnet build` downloads the NuGet packages and compiles the app. `dotnet ef database update` then creates `laborlaw.db` with all the tables.
 
 ### 4. Add your API keys (for the AI features)
 
