@@ -35,6 +35,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Our own services. "Scoped" = one object per web request.
 builder.Services.AddScoped<IDocumentStorage, DocumentStorage>();
+builder.Services.AddScoped<IPdfTextExtractor, PdfTextExtractor>();
+builder.Services.AddScoped<IArticleSplitter, ArticleSplitter>();
+builder.Services.AddScoped<ILawDocumentImporter, LawDocumentImporter>();
 
 builder.Services.AddControllersWithViews()
     // Translate [Display] names and validation messages using SharedResource.ar.resx.

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<Country>
+@{
     ViewData["Title"] = Localizer["Home"];
 }
 
@@ -8,7 +9,17 @@
         <p class="lead mb-2">
             @Localizer["Ask labor law questions in Arabic or English. Every answer shows its source: the law, the article, and the page."]
         </p>
-        <p class="text-muted mb-4">🇸🇦 @Localizer["Available now: Saudi Labor Law"]</p>
+        <p class="text-muted mb-4">
+            @if (Model.Count > 0)
+            {
+                @* The countries that have an uploaded law, e.g. "Available now: United Arab Emirates". *@
+                @Localizer["Available now: {0}", string.Join(" · ", Model.Select(country => Localizer[country.GetDisplayName()].Value))]
+            }
+            else
+            {
+                @Localizer["No laws uploaded yet."]
+            }
+        </p>
         <a class="btn btn-primary btn-lg px-4" asp-controller="Ask" asp-action="Index">@Localizer["Ask a question"]</a>
     </div>
 </div>

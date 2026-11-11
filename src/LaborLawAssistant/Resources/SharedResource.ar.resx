@@ -35,6 +35,9 @@
   <data name="History" xml:space="preserve">
     <value>السجل</value>
   </data>
+  <data name="Switch light / dark mode" xml:space="preserve">
+    <value>التبديل بين الوضع الفاتح والداكن</value>
+  </data>
   <data name="This is information, not legal advice." xml:space="preserve">
     <value>هذه معلومات، وليست استشارة قانونية.</value>
   </data>
@@ -43,8 +46,8 @@
   <data name="Ask labor law questions in Arabic or English. Every answer shows its source: the law, the article, and the page." xml:space="preserve">
     <value>اسأل عن قانون العمل بالعربية أو الإنجليزية. كل إجابة تعرض مصدرها: القانون، والمادة، والصفحة.</value>
   </data>
-  <data name="Available now: Saudi Labor Law" xml:space="preserve">
-    <value>متوفر الآن: نظام العمل السعودي</value>
+  <data name="Available now: {0}" xml:space="preserve">
+    <value>متوفر الآن: {0}</value>
   </data>
   <data name="Ask a question" xml:space="preserve">
     <value>اطرح سؤالاً</value>
@@ -54,13 +57,16 @@
   <data name="Saudi Arabia" xml:space="preserve">
     <value>السعودية</value>
   </data>
+  <data name="United Arab Emirates" xml:space="preserve">
+    <value>الإمارات</value>
+  </data>
 
   <!-- Documents page -->
   <data name="Upload a law PDF" xml:space="preserve">
     <value>رفع ملف قانون (PDF)</value>
   </data>
-  <data name="&quot;{0}&quot; was uploaded." xml:space="preserve">
-    <value>تم رفع "{0}".</value>
+  <data name="&quot;{0}&quot; was uploaded: {1} articles found." xml:space="preserve">
+    <value>تم رفع "{0}": تم العثور على {1} مادة.</value>
   </data>
   <data name="No laws uploaded yet." xml:space="preserve">
     <value>لم يتم رفع أي قانون بعد.</value>
@@ -122,6 +128,36 @@
   </data>
   <data name="The file must be smaller than {0} MB." xml:space="preserve">
     <value>يجب أن يكون حجم الملف أقل من {0} ميغابايت.</value>
+  </data>
+
+  <!-- Import errors (Step 4) -->
+  <data name="This PDF could not be read. It may be damaged or password-protected." xml:space="preserve">
+    <value>تعذّرت قراءة ملف PDF هذا. قد يكون تالفاً أو محمياً بكلمة مرور.</value>
+  </data>
+  <data name="No articles were found in this PDF. Is it a text PDF (not a scanned image)?" xml:space="preserve">
+    <value>لم يتم العثور على أي مادة في هذا الملف. هل هو ملف PDF نصي (وليس صورة ممسوحة ضوئياً)؟</value>
+  </data>
+
+  <!-- Document details page -->
+  <data name="{0} pages · {1} articles" xml:space="preserve">
+    <value>{0} صفحة · {1} مادة</value>
+  </data>
+  <data name="Article {0}" xml:space="preserve">
+    <value>المادة {0}</value>
+  </data>
+  <data name="Page {0}" xml:space="preserve">
+    <value>صفحة {0}</value>
+  </data>
+  <data name="Showing articles {0}–{1} of {2}" xml:space="preserve">
+    <value>عرض المواد {0}–{1} من {2}</value>
+  </data>
+
+  <!-- Pagination (Views/Shared/_Pagination.cshtml) -->
+  <data name="Previous" xml:space="preserve">
+    <value>السابق</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>التالي</value>
   </data>
 
   <!-- Placeholder pages -->

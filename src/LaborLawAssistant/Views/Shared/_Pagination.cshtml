@@ -1,0 +1,44 @@
+@model PaginationViewModel
+@* Page buttons for any long list: « Previous · 1 … 4 5 [6] 7 8 … 21 · Next »
+   Used with: <partial name="_Pagination" model="Model.Articles.Pagination" />
+   Url.Action(null, new { page = n }) = the same page address (same controller, action and id) with ?page=n. *@
+@{
+    // Show the first page, the last page, and 2 pages on each side of the current page.
+    var numbers = Enumerable.Range(1, Model.TotalPages)
+        .Where(n => n == 1 || n == Model.TotalPages || Math.Abs(n - Model.PageNumber) <= 2)
+        .ToList();
+}
+
+@if (Model.TotalPages > 1)
+{
+    <nav aria-label="@Localizer["Pages"]">
+        <ul class="pagination justify-content-center flex-wrap">
+            <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action(null, new { page = Model.PageNumber - 1 })">@Localizer["Previous"]</a>
+            </li>
+
+            @for (var i = 0; i < numbers.Count; i++)
+            {
+                @* A gap between two numbers (e.g. 1 and 4) is shown as "…". *@
+                if (i > 0 && numbers[i] - numbers[i - 1] > 1)
+                {
+                    <li class="page-item disabled"><span class="page-link">…</span></li>
+                }
+
+                var number = numbers[i];
+                if (number == Model.PageNumber)
+                {
+                    <li class="page-item active" aria-current="page"><span class="page-link">@number</span></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" href="@Url.Action(null, new { page = number })">@number</a></li>
+                }
+            }
+
+            <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action(null, new { page = Model.PageNumber + 1 })">@Localizer["Next"]</a>
+            </li>
+        </ul>
+    </nav>
+}

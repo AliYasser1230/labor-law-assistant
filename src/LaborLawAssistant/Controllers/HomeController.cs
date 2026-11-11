@@ -1,14 +1,22 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using LaborLawAssistant.Data;
 using LaborLawAssistant.Models;
 
 namespace LaborLawAssistant.Controllers;
 
-public class HomeController : Controller
+public class HomeController(AppDbContext db) : Controller
 {
-    public IActionResult Index()
+    // GET /: the welcome page. It lists the countries that have an uploaded law ("Available now: ...").
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var countries = await db.LawDocuments
+            .Select(document => document.Country)
+            .Distinct()
+            .ToListAsync();
+
+        return View(countries);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

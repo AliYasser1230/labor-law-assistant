@@ -15,6 +15,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - @Localizer["Labor Law Assistant"]</title>
+    <script>
+        // Dark mode: pick the theme before the page is drawn, so it never flashes white.
+        // Use the user's saved choice; if there is none, follow the computer's light/dark setting.
+        // Bootstrap reads data-bs-theme="light" or "dark" on <html> and changes all its colors.
+        (function () {
+            var saved = localStorage.getItem("theme");
+            var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+            document.documentElement.setAttribute("data-bs-theme", saved || (prefersDark ? "dark" : "light"));
+        })();
+    </script>
     <script type="importmap"></script>
     @if (isArabic)
     {
@@ -30,7 +40,8 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
     <header>
-        <nav class="navbar navbar-expand-sm bg-white border-bottom box-shadow mb-4">
+        @* bg-body = the page background color of the current theme (white in light mode, dark in dark mode). *@
+        <nav class="navbar navbar-expand-sm bg-body border-bottom box-shadow mb-4">
             <div class="container">
                 <a class="navbar-brand fw-semibold" asp-controller="Home" asp-action="Index">⚖️ @Localizer["Labor Law Assistant"]</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu"
@@ -50,13 +61,22 @@
                         </li>
                     </ul>
 
-                    @* Language switch. The form tag helper adds an anti-forgery token automatically. *@
-                    <form asp-controller="Language" asp-action="Set" method="post">
-                        <input type="hidden" name="returnUrl" value="@returnUrl" />
-                        <button type="submit" name="culture" value="@(isArabic ? "en" : "ar")" class="btn btn-outline-secondary btn-sm">
-                            @(isArabic ? "English" : "العربية")
+                    <div class="d-flex align-items-center gap-2">
+                        @* Dark mode button (see wwwroot/js/site.js). It shows 🌙 in light mode and ☀️ in dark mode. *@
+                        <button type="button" id="themeToggle" class="btn btn-outline-secondary btn-sm"
+                                title="@Localizer["Switch light / dark mode"]" aria-label="@Localizer["Switch light / dark mode"]">
+                            <span class="theme-icon-for-light">🌙</span>
+                            <span class="theme-icon-for-dark">☀️</span>
                         </button>
-                    </form>
+
+                        @* Language switch. The form tag helper adds an anti-forgery token automatically. *@
+                        <form asp-controller="Language" asp-action="Set" method="post">
+                            <input type="hidden" name="returnUrl" value="@returnUrl" />
+                            <button type="submit" name="culture" value="@(isArabic ? "en" : "ar")" class="btn btn-outline-secondary btn-sm">
+                                @(isArabic ? "English" : "العربية")
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -66,7 +86,7 @@
         @RenderBody()
     </main>
 
-    <footer class="border-top py-3 bg-light">
+    <footer class="border-top py-3 bg-body-tertiary">
         <div class="container text-muted small">
             ⚠️ @Localizer["This is information, not legal advice."]
         </div>

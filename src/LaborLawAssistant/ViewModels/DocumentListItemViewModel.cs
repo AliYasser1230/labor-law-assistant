@@ -7,6 +7,7 @@ namespace LaborLawAssistant.ViewModels;
 /// Only the fields the page shows, so we don't load every article's text just to count them.
 /// </summary>
 public record DocumentListItemViewModel(
+    int Id,
     string Title,
     Country Country,
     string FileName,

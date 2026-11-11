@@ -11,7 +11,7 @@
 @* TempData: set by DocumentsController.Upload just before the redirect. *@
 @if (TempData["UploadedTitle"] is string uploadedTitle)
 {
-    <div class="alert alert-success">@Localizer["\"{0}\" was uploaded.", uploadedTitle]</div>
+    <div class="alert alert-success">@Localizer["\"{0}\" was uploaded: {1} articles found.", uploadedTitle, TempData["ArticleCount"] ?? 0]</div>
 }
 
 @if (Model.Count == 0)
@@ -36,7 +36,7 @@ else
                 @foreach (var document in Model)
                 {
                     <tr>
-                        <td>@document.Title</td>
+                        <td><a asp-action="Details" asp-route-id="@document.Id">@document.Title</a></td>
                         @* DisplayFor shows the enum's [Display] name ("Saudi Arabia"), translated. *@
                         <td>@Html.DisplayFor(_ => document.Country)</td>
                         <td class="text-muted small">@document.FileName</td>

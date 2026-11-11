@@ -24,4 +24,6 @@ public class DocumentStorage(IWebHostEnvironment environment) : IDocumentStorage
     }
 
     public string GetFullPath(string storedFileName) => Path.Combine(Folder, storedFileName);
+
+    public void Delete(string storedFileName) => File.Delete(GetFullPath(storedFileName));
 }
