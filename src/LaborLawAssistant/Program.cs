@@ -1,5 +1,7 @@
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using LaborLawAssistant.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.WebEncoders;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +25,11 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
         .AddSupportedCultures(cultures)
         .AddSupportedUICultures(cultures);
 });
+
+// Database: EF Core + SQLite. The connection string is in appsettings.json ("DefaultConnection").
+// Any controller or service can now get an AppDbContext in its constructor.
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllersWithViews();
 
