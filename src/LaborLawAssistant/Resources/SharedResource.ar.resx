@@ -50,6 +50,80 @@
     <value>اطرح سؤالاً</value>
   </data>
 
+  <!-- Countries (enum [Display] names) -->
+  <data name="Saudi Arabia" xml:space="preserve">
+    <value>السعودية</value>
+  </data>
+
+  <!-- Documents page -->
+  <data name="Upload a law PDF" xml:space="preserve">
+    <value>رفع ملف قانون (PDF)</value>
+  </data>
+  <data name="&quot;{0}&quot; was uploaded." xml:space="preserve">
+    <value>تم رفع "{0}".</value>
+  </data>
+  <data name="No laws uploaded yet." xml:space="preserve">
+    <value>لم يتم رفع أي قانون بعد.</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>الاسم</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>الملف</value>
+  </data>
+  <data name="Pages" xml:space="preserve">
+    <value>الصفحات</value>
+  </data>
+  <data name="Articles" xml:space="preserve">
+    <value>المواد</value>
+  </data>
+  <data name="Uploaded" xml:space="preserve">
+    <value>تاريخ الرفع</value>
+  </data>
+
+  <!-- Upload form: labels, help text, buttons -->
+  <data name="Country" xml:space="preserve">
+    <value>الدولة</value>
+  </data>
+  <data name="Law title" xml:space="preserve">
+    <value>اسم القانون</value>
+  </data>
+  <data name="PDF file" xml:space="preserve">
+    <value>ملف PDF</value>
+  </data>
+  <data name="Example: Saudi Labor Law" xml:space="preserve">
+    <value>مثال: نظام العمل السعودي</value>
+  </data>
+  <data name="PDF only, up to {0} MB." xml:space="preserve">
+    <value>ملفات PDF فقط، حتى {0} ميغابايت.</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>رفع</value>
+  </data>
+  <data name="Back to documents" xml:space="preserve">
+    <value>العودة إلى المستندات</value>
+  </data>
+
+  <!-- Upload form: validation messages -->
+  <data name="Please choose a country." xml:space="preserve">
+    <value>من فضلك اختر الدولة.</value>
+  </data>
+  <data name="Please enter the law title." xml:space="preserve">
+    <value>من فضلك اكتب اسم القانون.</value>
+  </data>
+  <data name="The title can have at most {1} characters." xml:space="preserve">
+    <value>يمكن أن يحتوي الاسم على {1} حرفاً كحد أقصى.</value>
+  </data>
+  <data name="Please choose a PDF file." xml:space="preserve">
+    <value>من فضلك اختر ملف PDF.</value>
+  </data>
+  <data name="Only PDF files are allowed." xml:space="preserve">
+    <value>يُسمح بملفات PDF فقط.</value>
+  </data>
+  <data name="The file must be smaller than {0} MB." xml:space="preserve">
+    <value>يجب أن يكون حجم الملف أقل من {0} ميغابايت.</value>
+  </data>
+
   <!-- Placeholder pages -->
   <data name="Coming soon (step {0})." xml:space="preserve">
     <value>قريباً (الخطوة {0}).</value>

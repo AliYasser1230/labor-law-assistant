@@ -1,6 +1,8 @@
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using LaborLawAssistant;
 using LaborLawAssistant.Data;
+using LaborLawAssistant.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.WebEncoders;
 
@@ -31,7 +33,13 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddControllersWithViews();
+// Our own services. "Scoped" = one object per web request.
+builder.Services.AddScoped<IDocumentStorage, DocumentStorage>();
+
+builder.Services.AddControllersWithViews()
+    // Translate [Display] names and validation messages using SharedResource.ar.resx.
+    .AddDataAnnotationsLocalization(options =>
+        options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource)));
 
 var app = builder.Build();
 

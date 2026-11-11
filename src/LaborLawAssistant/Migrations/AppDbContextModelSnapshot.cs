@@ -66,6 +66,11 @@ namespace LaborLawAssistant.Migrations
                     b.Property<int>("PageCount")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("StoredFileName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200)

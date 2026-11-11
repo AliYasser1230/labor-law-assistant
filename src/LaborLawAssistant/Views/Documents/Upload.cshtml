@@ -1,0 +1,43 @@
+@model UploadDocumentViewModel
+@{
+    ViewData["Title"] = Localizer["Upload a law PDF"];
+}
+
+<h1 class="h3 mb-4">@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-lg-6">
+        @* enctype="multipart/form-data" is required to send a file. Without it, File is always null. *@
+        <form asp-action="Upload" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                @* asp-for="Country": the label text, the field name and the value all come from the view model. *@
+                <label asp-for="Country" class="form-label"></label>
+                <select asp-for="Country" asp-items="Html.GetEnumSelectList<Country>()" class="form-select"></select>
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" placeholder="@Localizer["Example: Saudi Labor Law"]" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="File" class="form-label"></label>
+                @* IFormFile becomes <input type="file">. "accept" makes the file picker show PDFs first. *@
+                <input asp-for="File" class="form-control" accept=".pdf,application/pdf" />
+                <div class="form-text">@Localizer["PDF only, up to {0} MB.", UploadDocumentViewModel.MaxFileSizeMb]</div>
+                <span asp-validation-for="File" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">@Localizer["Upload"]</button>
+            <a asp-action="Index" class="btn btn-link">@Localizer["Back to documents"]</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @* Browser-side validation: jQuery Validation + our two file rules. *@
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/file-validation.js" asp-append-version="true"></script>
+}

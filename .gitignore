@@ -485,3 +485,6 @@ $RECYCLE.BIN/
 *.db
 *.db-shm
 *.db-wal
+
+# Uploaded law PDFs (saved by DocumentStorage)
+App_Data/

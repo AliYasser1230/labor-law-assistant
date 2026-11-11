@@ -1,6 +1,52 @@
+@model List<DocumentListItemViewModel>
 @{
     ViewData["Title"] = Localizer["Documents"];
 }
 
-<h1>@ViewData["Title"]</h1>
-<p class="text-muted">@Localizer["Coming soon (step {0}).", 3]</p>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">@ViewData["Title"]</h1>
+    <a asp-action="Upload" class="btn btn-primary">@Localizer["Upload a law PDF"]</a>
+</div>
+
+@* TempData: set by DocumentsController.Upload just before the redirect. *@
+@if (TempData["UploadedTitle"] is string uploadedTitle)
+{
+    <div class="alert alert-success">@Localizer["\"{0}\" was uploaded.", uploadedTitle]</div>
+}
+
+@if (Model.Count == 0)
+{
+    <p class="text-muted">@Localizer["No laws uploaded yet."]</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>@Localizer["Title"]</th>
+                    <th>@Localizer["Country"]</th>
+                    <th>@Localizer["File"]</th>
+                    <th>@Localizer["Pages"]</th>
+                    <th>@Localizer["Articles"]</th>
+                    <th>@Localizer["Uploaded"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var document in Model)
+                {
+                    <tr>
+                        <td>@document.Title</td>
+                        @* DisplayFor shows the enum's [Display] name ("Saudi Arabia"), translated. *@
+                        <td>@Html.DisplayFor(_ => document.Country)</td>
+                        <td class="text-muted small">@document.FileName</td>
+                        @* 0 pages = not read yet (step 4). *@
+                        <td>@(document.PageCount > 0 ? document.PageCount.ToString() : "—")</td>
+                        <td>@document.ArticleCount</td>
+                        <td>@document.UploadedAt.ToLocalTime().ToString("g")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

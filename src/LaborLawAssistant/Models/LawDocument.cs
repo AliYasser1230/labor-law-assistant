@@ -16,9 +16,13 @@ public class LawDocument
     [MaxLength(200)]
     public required string Title { get; set; }
 
-    // The original name of the uploaded file, e.g. "saudi-labor-law.pdf".
+    // The original name of the uploaded file, e.g. "saudi-labor-law.pdf" (only for display).
     [MaxLength(255)]
     public required string FileName { get; set; }
+
+    // The random name we saved the file under on disk, e.g. "3f2b...c1.pdf" (see DocumentStorage).
+    [MaxLength(100)]
+    public required string StoredFileName { get; set; }
 
     public int PageCount { get; set; }
 

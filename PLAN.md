@@ -11,7 +11,7 @@ An AI assistant that answers labor law questions (Arabic + English) from officia
 | 0 | Setup: DBeaver ✅, SQLite ✅ (built into macOS), user-secrets ✅, first git commit ✅ · user still doing: Anthropic + Voyage AI API keys, Saudi Labor Law PDF, publish repo to GitHub | 🔄 |
 | 1 | Project + `_Layout` (header, menu Ask · Documents · History, disclaimer footer, Arabic right-to-left) | ✅ |
 | 2 | Database: EF Core + SQLite (one file, `laborlaw.db`, opened in DBeaver), tables `LawDocument`, `LawArticle`, `QuestionLog`, first migration | ✅ |
-| 3 | Upload page: `DocumentsController`, `UploadDocumentViewModel` (model binding + validation: PDF only, < 20 MB) | ⬜ |
+| 3 | Upload page: `DocumentsController`, `UploadDocumentViewModel` (model binding + validation: PDF only, < 20 MB) | ✅ |
 | 4 | 🟦 RAG prep: read the PDF page by page (PdfPig), cut into articles, save with page numbers | ⬜ |
 | 5 | 🟦 RAG prep: embeddings for every article (`IEmbeddingService` → Voyage AI), saved in SQLite | ⬜ |
 | 6 | 🟦 R = Retrieval: `ISearchService` compares the question's embedding with every article's embedding (cosine similarity in C#), top 5, "not found" if nothing close | ⬜ |
