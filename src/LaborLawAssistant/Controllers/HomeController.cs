@@ -8,7 +8,6 @@ namespace LaborLawAssistant.Controllers;
 
 public class HomeController(AppDbContext db) : Controller
 {
-    // GET /: the welcome page. It lists the countries that have an uploaded law ("Available now: ...").
     public async Task<IActionResult> Index()
     {
         var countries = await db.LawDocuments

@@ -8,10 +8,13 @@
     <a asp-action="Upload" class="btn btn-primary">@Localizer["Upload a law PDF"]</a>
 </div>
 
-@* TempData: set by DocumentsController.Upload just before the redirect. *@
 @if (TempData["UploadedTitle"] is string uploadedTitle)
 {
     <div class="alert alert-success">@Localizer["\"{0}\" was uploaded: {1} articles found.", uploadedTitle, TempData["ArticleCount"] ?? 0]</div>
+}
+@if (TempData["EmbeddingsFailed"] is true)
+{
+    <div class="alert alert-warning">@Localizer["The articles were saved, but the embeddings could not be created. Open the law and click \"Create embeddings\" to try again."]</div>
 }
 
 @if (Model.Count == 0)
@@ -29,6 +32,7 @@ else
                     <th>@Localizer["File"]</th>
                     <th>@Localizer["Pages"]</th>
                     <th>@Localizer["Articles"]</th>
+                    <th>@Localizer["Embeddings"]</th>
                     <th>@Localizer["Uploaded"]</th>
                 </tr>
             </thead>
@@ -37,12 +41,14 @@ else
                 {
                     <tr>
                         <td><a asp-action="Details" asp-route-id="@document.Id">@document.Title</a></td>
-                        @* DisplayFor shows the enum's [Display] name ("Saudi Arabia"), translated. *@
                         <td>@Html.DisplayFor(_ => document.Country)</td>
                         <td class="text-muted small">@document.FileName</td>
-                        @* 0 pages = not read yet (step 4). *@
-                        <td>@(document.PageCount > 0 ? document.PageCount.ToString() : "—")</td>
+                        <td>@document.PageCount</td>
                         <td>@document.ArticleCount</td>
+                        <td class="text-nowrap">
+                            @(document.EmbeddedCount == document.ArticleCount ? "✅" : "⚠️")
+                            @document.EmbeddedCount / @document.ArticleCount
+                        </td>
                         <td>@document.UploadedAt.ToLocalTime().ToString("g")</td>
                     </tr>
                 }

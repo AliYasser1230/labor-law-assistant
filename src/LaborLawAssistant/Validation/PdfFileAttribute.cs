@@ -5,12 +5,6 @@ using Microsoft.Extensions.Localization;
 
 namespace LaborLawAssistant.Validation;
 
-/// <summary>
-/// Model validation rule: the uploaded file must be a real PDF.
-/// Server: the name must end with ".pdf" AND the file must start with "%PDF-"
-/// (every PDF starts with these bytes, so renaming photo.jpg to photo.pdf does not pass).
-/// Browser: only the ".pdf" name is checked (see wwwroot/js/file-validation.js).
-/// </summary>
 public class PdfFileAttribute : ValidationAttribute, IClientModelValidator
 {
     private const string Message = "Only PDF files are allowed.";
@@ -40,7 +34,6 @@ public class PdfFileAttribute : ValidationAttribute, IClientModelValidator
             return false;
         }
 
-        // Read the first 5 bytes and compare them with "%PDF-".
         using var stream = file.OpenReadStream();
         var header = new byte[5];
         var bytesRead = stream.ReadAtLeast(header, header.Length, throwOnEndOfStream: false);

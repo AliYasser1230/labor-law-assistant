@@ -1,12 +1,9 @@
 ﻿@using System.Globalization
 @{
-    // Is the current language Arabic? (set by the language cookie, see LanguageController)
     var isArabic = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ar";
 
-    // Which controller is showing now? Used to highlight the active menu item.
     var currentController = ViewContext.RouteData.Values["controller"] as string;
 
-    // After switching language, come back to this same page.
     var returnUrl = $"~{Context.Request.Path}{Context.Request.QueryString}";
 }
 <!DOCTYPE html>
@@ -16,9 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - @Localizer["Labor Law Assistant"]</title>
     <script>
-        // Dark mode: pick the theme before the page is drawn, so it never flashes white.
-        // Use the user's saved choice; if there is none, follow the computer's light/dark setting.
-        // Bootstrap reads data-bs-theme="light" or "dark" on <html> and changes all its colors.
         (function () {
             var saved = localStorage.getItem("theme");
             var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -28,7 +22,6 @@
     <script type="importmap"></script>
     @if (isArabic)
     {
-        @* Bootstrap's right-to-left version: flips margins, menus, and text alignment. *@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
     }
     else
@@ -40,7 +33,6 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
     <header>
-        @* bg-body = the page background color of the current theme (white in light mode, dark in dark mode). *@
         <nav class="navbar navbar-expand-sm bg-body border-bottom box-shadow mb-4">
             <div class="container">
                 <a class="navbar-brand fw-semibold" asp-controller="Home" asp-action="Index">⚖️ @Localizer["Labor Law Assistant"]</a>
@@ -62,14 +54,12 @@
                     </ul>
 
                     <div class="d-flex align-items-center gap-2">
-                        @* Dark mode button (see wwwroot/js/site.js). It shows 🌙 in light mode and ☀️ in dark mode. *@
                         <button type="button" id="themeToggle" class="btn btn-outline-secondary btn-sm"
                                 title="@Localizer["Switch light / dark mode"]" aria-label="@Localizer["Switch light / dark mode"]">
                             <span class="theme-icon-for-light">🌙</span>
                             <span class="theme-icon-for-dark">☀️</span>
                         </button>
 
-                        @* Language switch. The form tag helper adds an anti-forgery token automatically. *@
                         <form asp-controller="Language" asp-action="Set" method="post">
                             <input type="hidden" name="returnUrl" value="@returnUrl" />
                             <button type="submit" name="culture" value="@(isArabic ? "en" : "ar")" class="btn btn-outline-secondary btn-sm">

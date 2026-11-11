@@ -1,5 +1,3 @@
-﻿/* Styles only for _Layout.cshtml ("scoped CSS": .NET adds a unique attribute so they don't leak to other views). */
-
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }

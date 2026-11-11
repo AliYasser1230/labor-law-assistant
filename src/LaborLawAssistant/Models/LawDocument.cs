@@ -2,13 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LaborLawAssistant.Models;
 
-/// <summary>
-/// One uploaded law PDF (for example: the Saudi Labor Law).
-/// Table: LawDocuments
-/// </summary>
 public class LawDocument
 {
-    // Primary key. EF Core sees the name "Id" and makes it auto-increment.
     public int Id { get; set; }
 
     public Country Country { get; set; }
@@ -16,19 +11,15 @@ public class LawDocument
     [MaxLength(200)]
     public required string Title { get; set; }
 
-    // The original name of the uploaded file, e.g. "saudi-labor-law.pdf" (only for display).
     [MaxLength(255)]
     public required string FileName { get; set; }
 
-    // The random name we saved the file under on disk, e.g. "3f2b...c1.pdf" (see DocumentStorage).
     [MaxLength(100)]
     public required string StoredFileName { get; set; }
 
     public int PageCount { get; set; }
 
-    // Always saved in UTC (world time), converted to local time only for display.
     public DateTime UploadedAt { get; set; }
 
-    // Navigation property: all articles cut from this PDF (one document → many articles).
     public List<LawArticle> Articles { get; set; } = [];
 }

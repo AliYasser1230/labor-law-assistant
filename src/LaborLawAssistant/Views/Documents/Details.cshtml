@@ -13,29 +13,36 @@
     <a asp-action="Index" class="btn btn-outline-secondary btn-sm">@Localizer["Back to documents"]</a>
 </div>
 
+@if (TempData["EmbeddedCount"] is int embeddedNow)
+{
+    <div class="alert alert-success">@Localizer["Embeddings created for {0} articles.", embeddedNow]</div>
+}
+@if (TempData["EmbeddingsFailed"] is true)
+{
+    <div class="alert alert-danger">@Localizer["The embeddings could not be created. Check the Voyage AI API key and the internet connection, then try again."]</div>
+}
+
+@if (Model.EmbeddedCount < Model.Articles.TotalCount)
+{
+    <div class="alert alert-warning d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <span>@Localizer["{0} of {1} articles have embeddings. Questions can only find articles that have one.", Model.EmbeddedCount, Model.Articles.TotalCount]</span>
+        <form asp-action="Embed" asp-route-id="@Model.Id" method="post" class="d-flex align-items-center gap-2">
+            <span class="small text-body-secondary">@Localizer["This can take a few minutes."]</span>
+            <button type="submit" class="btn btn-warning btn-sm">@Localizer["Create embeddings"]</button>
+        </form>
+    </div>
+}
+
 <p class="small text-muted mb-3">
     @Localizer["Showing articles {0}–{1} of {2}", Model.Articles.FirstItemNumber, Model.Articles.LastItemNumber, Model.Articles.TotalCount]
+    · @Localizer["Embeddings: {0} / {1}", Model.EmbeddedCount, Model.Articles.TotalCount]
 </p>
 
-@* Grid: 1 card per row on phones, 2 per row on large screens (Bootstrap row-cols). *@
 <div class="row row-cols-1 row-cols-lg-2 g-3 mb-4">
     @foreach (var article in Model.Articles.Items)
     {
         <div class="col">
-            <section class="card h-100 shadow-sm">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <span class="fw-semibold">@Localizer["Article {0}", article.ArticleNumber]</span>
-                    <span class="badge bg-body-secondary text-body border">@Localizer["Page {0}", article.PageNumber]</span>
-                </div>
-                @* The law text is English, so it is always left-to-right, even on the Arabic page. *@
-                <div class="card-body" dir="ltr">
-                    @if (article.Heading is not null)
-                    {
-                        <h2 class="h6 card-title">@article.Heading</h2>
-                    }
-                    <div class="law-text article-text small">@article.Text</div>
-                </div>
-            </section>
+            <partial name="_ArticleCard" model="new ArticleCardViewModel(article)" />
         </div>
     }
 </div>

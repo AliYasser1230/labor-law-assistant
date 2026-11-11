@@ -4,12 +4,6 @@ using LaborLawAssistant.Validation;
 
 namespace LaborLawAssistant.ViewModels;
 
-/// <summary>
-/// The data of the upload form (Views/Documents/Upload.cshtml).
-/// Model binding fills these properties from the form fields with the same names.
-/// The attributes are the model validation rules; the result is in ModelState.IsValid.
-/// Display names and error messages are English keys, translated to Arabic in SharedResource.ar.resx.
-/// </summary>
 public class UploadDocumentViewModel
 {
     public const int MaxFileSizeMb = 20;

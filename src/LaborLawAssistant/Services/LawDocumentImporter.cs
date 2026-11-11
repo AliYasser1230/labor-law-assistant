@@ -1,26 +1,21 @@
 using LaborLawAssistant.Data;
 using LaborLawAssistant.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LaborLawAssistant.Services;
 
-/// <summary>
-/// The "recipe" for importing a law: save the file → read the pages → cut into articles → save in the database.
-/// It only coordinates; each job is done by its own service (dependency injection).
-/// Step 5 will add one more job here: embeddings.
-/// </summary>
 public class LawDocumentImporter(
     AppDbContext db,
     IDocumentStorage storage,
     IPdfTextExtractor pdfTextExtractor,
     IArticleSplitter articleSplitter,
+    IEmbeddingService embeddingService,
     ILogger<LawDocumentImporter> logger) : ILawDocumentImporter
 {
     public async Task<ImportResult> ImportAsync(Country country, string title, IFormFile file)
     {
-        // 1. Save the PDF on disk.
         var storedFileName = await storage.SaveAsync(file);
 
-        // 2. Read the text of every page.
         IReadOnlyList<PdfPageText> pages;
         try
         {
@@ -28,23 +23,19 @@ public class LawDocumentImporter(
         }
         catch (Exception exception)
         {
-            // PdfPig throws for damaged or password-protected files.
             logger.LogWarning(exception, "Could not read PDF {FileName}", file.FileName);
             storage.Delete(storedFileName);
             return ImportResult.Failed("This PDF could not be read. It may be damaged or password-protected.");
         }
 
-        // 3. Cut the text into articles.
         var articles = articleSplitter.Split(pages);
         if (articles.Count == 0)
         {
-            // For example a scanned PDF (only images, no text), or a file that is not a law.
             storage.Delete(storedFileName);
             return ImportResult.Failed("No articles were found in this PDF. Is it a text PDF (not a scanned image)?");
         }
 
-        // 4. Save the document and all its articles. One SaveChanges = one transaction: all rows or none.
-        db.LawDocuments.Add(new LawDocument
+        var document = new LawDocument
         {
             Country = country,
             Title = title,
@@ -60,10 +51,59 @@ public class LawDocumentImporter(
                     PageNumber = article.PageNumber,
                 })
                 .ToList(),
-        });
+        };
+        db.LawDocuments.Add(document);
         await db.SaveChangesAsync();
-
         logger.LogInformation("Imported {Title}: {Pages} pages, {Articles} articles", title, pages.Count, articles.Count);
-        return ImportResult.Succeeded(articles.Count);
+
+        var embedding = await EmbedMissingArticlesAsync(document.Id);
+        return ImportResult.Succeeded(articles.Count, embedding.Failed);
     }
+
+    public async Task<EmbeddingRunResult> EmbedMissingArticlesAsync(int documentId)
+    {
+        var documentTitle = await db.LawDocuments
+            .Where(document => document.Id == documentId)
+            .Select(document => document.Title)
+            .FirstAsync();
+
+        var articles = await db.LawArticles
+            .Where(article => article.LawDocumentId == documentId && article.Embedding == null)
+            .OrderBy(article => article.Id)
+            .ToListAsync();
+
+        if (articles.Count == 0)
+        {
+            return new EmbeddingRunResult(0, Failed: false);
+        }
+
+        var embeddedCount = 0;
+        try
+        {
+            foreach (var group in articles.Chunk(ArticlesPerGroup))
+            {
+                var texts = group
+                    .Select(article => $"{documentTitle}\nArticle {article.ArticleNumber}\n{article.Text}")
+                    .ToList();
+
+                var embeddings = await embeddingService.EmbedDocumentsAsync(texts);
+                for (var i = 0; i < group.Length; i++)
+                {
+                    group[i].Embedding = embeddings[i];
+                }
+
+                await db.SaveChangesAsync();
+                embeddedCount += group.Length;
+            }
+
+            return new EmbeddingRunResult(embeddedCount, Failed: false);
+        }
+        catch (EmbeddingException exception)
+        {
+            logger.LogWarning(exception, "Could not create embeddings for document {DocumentId} ({Done} done)", documentId, embeddedCount);
+            return new EmbeddingRunResult(embeddedCount, Failed: true);
+        }
+    }
+
+    private const int ArticlesPerGroup = 20;
 }

@@ -1,6 +1,89 @@
+@using Microsoft.AspNetCore.Mvc.Rendering
+@model AskQuestionViewModel
 @{
     ViewData["Title"] = Localizer["Ask"];
+
+    var countryOptions = Model.AvailableCountries
+        .Select(country => new SelectListItem(Localizer[country.GetDisplayName()].Value, ((int)country).ToString()));
 }
 
-<h1>@ViewData["Title"]</h1>
-<p class="text-muted">@Localizer["Coming soon (step {0}).", 7]</p>
+<h1 class="h3 mb-4">@Localizer["Ask a question"]</h1>
+
+@if (Model.AvailableCountries.Count == 0)
+{
+    <div class="alert alert-info">
+        @Localizer["There is no law uploaded yet."]
+        <a asp-controller="Documents" asp-action="Upload">@Localizer["Upload a law PDF"]</a>
+    </div>
+}
+else
+{
+    <form asp-action="Index" method="post" class="card card-body shadow-sm mb-4">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="row g-3">
+            <div class="col-md-3">
+                <label asp-for="Country" class="form-label"></label>
+                <select asp-for="Country" asp-items="countryOptions" class="form-select"></select>
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+            <div class="col-md-9">
+                <label asp-for="Question" class="form-label"></label>
+                <textarea asp-for="Question" class="form-control" rows="3" dir="auto"
+                          placeholder="@Localizer["Example: How many days of annual leave do I get?"]"></textarea>
+                <span asp-validation-for="Question" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mt-3 d-flex align-items-center gap-2">
+            <button type="submit" id="askButton" class="btn btn-primary">@Localizer["Ask"]</button>
+            <span id="askWaiting" class="small text-body-secondary d-none">
+                <span class="spinner-border spinner-border-sm me-1" aria-hidden="true"></span>
+                @Localizer["Reading the law and writing the answer…"]
+            </span>
+        </div>
+    </form>
+}
+
+@if (Model.Result is { Found: false })
+{
+    <div class="alert alert-warning">@Localizer["I couldn't find this in the law. Try asking in a different way."]</div>
+}
+else if (Model.Result is { Found: true } result)
+{
+    var cited = Model.Answer?.Parts.SelectMany(part => part.SourceNumbers).ToHashSet() ?? [];
+
+    @if (Model.Answer is { Refused: true })
+    {
+        <div class="alert alert-warning">@Localizer["Claude could not answer this question. Try asking it in a different way."]</div>
+    }
+    else if (Model.Answer is not null)
+    {
+        <partial name="_Answer" model="Model.Answer" />
+    }
+
+    <h2 class="h5 mb-3">@Localizer["Sources: the closest articles in the law"]</h2>
+    <div class="row row-cols-1 row-cols-lg-2 g-3">
+        @for (var i = 0; i < result.Hits.Count; i++)
+        {
+            var hit = result.Hits[i];
+            var number = i + 1;
+            <div class="col">
+                <partial name="_ArticleCard"
+                         model="new ArticleCardViewModel(ArticleItemViewModel.Create(hit.ArticleNumber, hit.PageNumber, hit.Text), hit.LawTitle, hit.Score, number, cited.Contains(number))" />
+            </div>
+        }
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $("form").on("submit", function () {
+            if ($(this).valid()) {
+                $("#askButton").prop("disabled", true);
+                $("#askWaiting").removeClass("d-none");
+            }
+        });
+    </script>
+}

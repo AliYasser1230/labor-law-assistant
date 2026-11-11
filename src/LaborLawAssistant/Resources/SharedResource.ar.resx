@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  Arabic translations for the whole app.
-  name  = the English text (the same text we write in the views)
-  value = the Arabic text shown when the user picks Arabic
-  If a text is missing here, the English text is shown.
--->
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -19,7 +13,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
 
-  <!-- Layout: header, menu, footer -->
   <data name="Labor Law Assistant" xml:space="preserve">
     <value>مساعد قانون العمل</value>
   </data>
@@ -42,7 +35,6 @@
     <value>هذه معلومات، وليست استشارة قانونية.</value>
   </data>
 
-  <!-- Home page -->
   <data name="Ask labor law questions in Arabic or English. Every answer shows its source: the law, the article, and the page." xml:space="preserve">
     <value>اسأل عن قانون العمل بالعربية أو الإنجليزية. كل إجابة تعرض مصدرها: القانون، والمادة، والصفحة.</value>
   </data>
@@ -53,7 +45,6 @@
     <value>اطرح سؤالاً</value>
   </data>
 
-  <!-- Countries (enum [Display] names) -->
   <data name="Saudi Arabia" xml:space="preserve">
     <value>السعودية</value>
   </data>
@@ -61,7 +52,6 @@
     <value>الإمارات</value>
   </data>
 
-  <!-- Documents page -->
   <data name="Upload a law PDF" xml:space="preserve">
     <value>رفع ملف قانون (PDF)</value>
   </data>
@@ -87,7 +77,6 @@
     <value>تاريخ الرفع</value>
   </data>
 
-  <!-- Upload form: labels, help text, buttons -->
   <data name="Country" xml:space="preserve">
     <value>الدولة</value>
   </data>
@@ -110,7 +99,6 @@
     <value>العودة إلى المستندات</value>
   </data>
 
-  <!-- Upload form: validation messages -->
   <data name="Please choose a country." xml:space="preserve">
     <value>من فضلك اختر الدولة.</value>
   </data>
@@ -130,7 +118,6 @@
     <value>يجب أن يكون حجم الملف أقل من {0} ميغابايت.</value>
   </data>
 
-  <!-- Import errors (Step 4) -->
   <data name="This PDF could not be read. It may be damaged or password-protected." xml:space="preserve">
     <value>تعذّرت قراءة ملف PDF هذا. قد يكون تالفاً أو محمياً بكلمة مرور.</value>
   </data>
@@ -138,7 +125,6 @@
     <value>لم يتم العثور على أي مادة في هذا الملف. هل هو ملف PDF نصي (وليس صورة ممسوحة ضوئياً)؟</value>
   </data>
 
-  <!-- Document details page -->
   <data name="{0} pages · {1} articles" xml:space="preserve">
     <value>{0} صفحة · {1} مادة</value>
   </data>
@@ -152,7 +138,81 @@
     <value>عرض المواد {0}–{1} من {2}</value>
   </data>
 
-  <!-- Pagination (Views/Shared/_Pagination.cshtml) -->
+  <data name="Embeddings" xml:space="preserve">
+    <value>التضمينات</value>
+  </data>
+  <data name="Embeddings: {0} / {1}" xml:space="preserve">
+    <value>التضمينات: {0} / {1}</value>
+  </data>
+  <data name="This can take a few minutes." xml:space="preserve">
+    <value>قد يستغرق هذا بضع دقائق.</value>
+  </data>
+  <data name="Create embeddings" xml:space="preserve">
+    <value>إنشاء التضمينات</value>
+  </data>
+  <data name="Embeddings created for {0} articles." xml:space="preserve">
+    <value>تم إنشاء التضمينات لـ {0} مادة.</value>
+  </data>
+  <data name="{0} of {1} articles have embeddings. Questions can only find articles that have one." xml:space="preserve">
+    <value>{0} من {1} مادة لديها تضمينات. لا يمكن للأسئلة العثور إلا على المواد التي لديها تضمينات.</value>
+  </data>
+  <data name="The embeddings could not be created. Check the Voyage AI API key and the internet connection, then try again." xml:space="preserve">
+    <value>تعذّر إنشاء التضمينات. تحقق من مفتاح Voyage AI ومن الاتصال بالإنترنت، ثم حاول مرة أخرى.</value>
+  </data>
+  <data name="The articles were saved, but the embeddings could not be created. Open the law and click &quot;Create embeddings&quot; to try again." xml:space="preserve">
+    <value>تم حفظ المواد، لكن تعذّر إنشاء التضمينات. افتح القانون واضغط "إنشاء التضمينات" للمحاولة مرة أخرى.</value>
+  </data>
+
+  <data name="Your question" xml:space="preserve">
+    <value>سؤالك</value>
+  </data>
+  <data name="Please type your question." xml:space="preserve">
+    <value>من فضلك اكتب سؤالك.</value>
+  </data>
+  <data name="The question must be between {2} and {1} characters." xml:space="preserve">
+    <value>يجب أن يكون طول السؤال بين {2} و{1} حرفاً.</value>
+  </data>
+  <data name="Example: How many days of annual leave do I get?" xml:space="preserve">
+    <value>مثال: كم يوماً من الإجازة السنوية أستحق؟</value>
+  </data>
+  <data name="There is no law uploaded yet." xml:space="preserve">
+    <value>لم يتم رفع أي قانون بعد.</value>
+  </data>
+  <data name="I couldn't find this in the law. Try asking in a different way." xml:space="preserve">
+    <value>لم أجد هذا في القانون. جرّب صياغة السؤال بطريقة أخرى.</value>
+  </data>
+  <data name="{0}% match" xml:space="preserve">
+    <value>تطابق {0}%</value>
+  </data>
+  <data name="The search is not available right now. Please try again in a minute." xml:space="preserve">
+    <value>البحث غير متاح الآن. حاول مرة أخرى بعد دقيقة.</value>
+  </data>
+
+  <data name="Answer" xml:space="preserve">
+    <value>الإجابة</value>
+  </data>
+  <data name="Source {0}" xml:space="preserve">
+    <value>المصدر {0}</value>
+  </data>
+  <data name="Cited in the answer" xml:space="preserve">
+    <value>مذكورة في الإجابة</value>
+  </data>
+  <data name="Sources: the closest articles in the law" xml:space="preserve">
+    <value>المصادر: أقرب المواد في القانون</value>
+  </data>
+  <data name="{0} input + {1} output tokens" xml:space="preserve">
+    <value>{0} رمز مُدخل + {1} رمز مُخرج</value>
+  </data>
+  <data name="Reading the law and writing the answer…" xml:space="preserve">
+    <value>جارٍ قراءة القانون وكتابة الإجابة…</value>
+  </data>
+  <data name="Claude could not answer this question. Try asking it in a different way." xml:space="preserve">
+    <value>لم يتمكن Claude من الإجابة عن هذا السؤال. جرّب صياغته بطريقة أخرى.</value>
+  </data>
+  <data name="The answer is not available right now. The closest articles are shown below." xml:space="preserve">
+    <value>الإجابة غير متاحة الآن. أقرب المواد معروضة بالأسفل.</value>
+  </data>
+
   <data name="Previous" xml:space="preserve">
     <value>السابق</value>
   </data>
@@ -160,7 +220,6 @@
     <value>التالي</value>
   </data>
 
-  <!-- Placeholder pages -->
   <data name="Coming soon (step {0})." xml:space="preserve">
     <value>قريباً (الخطوة {0}).</value>
   </data>

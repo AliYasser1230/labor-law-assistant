@@ -2,17 +2,17 @@ using LaborLawAssistant.Models;
 
 namespace LaborLawAssistant.Services;
 
-/// <summary>The result of an import: success + number of articles, or an error message (an English key for SharedResource).</summary>
-public record ImportResult(bool Success, string? Error, int ArticleCount)
+public record ImportResult(bool Success, string? Error, int ArticleCount, bool EmbeddingsFailed)
 {
-    public static ImportResult Succeeded(int articleCount) => new(true, null, articleCount);
-    public static ImportResult Failed(string error) => new(false, error, 0);
+    public static ImportResult Succeeded(int articleCount, bool embeddingsFailed) => new(true, null, articleCount, embeddingsFailed);
+    public static ImportResult Failed(string error) => new(false, error, 0, false);
 }
 
-/// <summary>
-/// Part A of the system: turns an uploaded law PDF into saved articles.
-/// </summary>
+public record EmbeddingRunResult(int EmbeddedCount, bool Failed);
+
 public interface ILawDocumentImporter
 {
     Task<ImportResult> ImportAsync(Country country, string title, IFormFile file);
+
+    Task<EmbeddingRunResult> EmbedMissingArticlesAsync(int documentId);
 }
