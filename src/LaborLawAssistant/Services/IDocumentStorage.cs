@@ -2,9 +2,7 @@ namespace LaborLawAssistant.Services;
 
 public interface IDocumentStorage
 {
-    Task<string> SaveAsync(IFormFile file);
+    Task<string> SaveAsync(Stream pdf, CancellationToken cancellationToken = default);
 
-    string GetFullPath(string storedFileName);
-
-    void Delete(string storedFileName);
+    Task DeleteAsync(string storedFileName, CancellationToken cancellationToken = default);
 }

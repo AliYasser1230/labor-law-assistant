@@ -23,7 +23,6 @@ public class IconTagHelper : TagHelper
         ["sparkles"] = "<path d=\"M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z\"/><path d=\"M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z\"/>",
         ["search"] = "<circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"M20 20l-4-4\"/>",
         ["layers"] = "<path d=\"M12 3l9 5-9 5-9-5z\"/><path d=\"M3 13l9 5 9-5\"/>",
-        ["coins"] = "<ellipse cx=\"12\" cy=\"6\" rx=\"7\" ry=\"3\"/><path d=\"M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6\"/><path d=\"M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6\"/>",
         ["chevron-down"] = "<path d=\"M6 9l6 6 6-6\"/>",
     };
 

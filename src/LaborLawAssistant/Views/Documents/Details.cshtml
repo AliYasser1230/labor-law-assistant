@@ -35,7 +35,7 @@
             <span class="feature-icon @(ready ? "feature-icon-success" : "feature-icon-warning")"><icon name="@(ready ? "check" : "alert")" size="20" /></span>
             <div>
                 <div class="stat-value">@Model.EmbeddedCount <span class="fs-6 fw-normal text-body-secondary">/ @Model.Articles.TotalCount</span></div>
-                <div class="stat-label">@Localizer["Embeddings"]</div>
+                <div class="stat-label">@Localizer["Articles ready for questions"]</div>
             </div>
         </div>
     </div>
@@ -45,14 +45,14 @@
 {
     <div class="notice notice-success mb-3">
         <icon name="check" size="20" />
-        <span>@Localizer["Embeddings created for {0} articles.", embeddedNow]</span>
+        <span>@Localizer["{0} articles are now ready for questions.", embeddedNow]</span>
     </div>
 }
 @if (TempData["EmbeddingsFailed"] is true)
 {
     <div class="notice notice-danger mb-3">
         <icon name="alert" size="20" />
-        <span>@Localizer["The embeddings could not be created. Check the Voyage AI API key and the internet connection, then try again."]</span>
+        <span>@Localizer["The articles could not be prepared right now. Please try again in a minute."]</span>
     </div>
 }
 
@@ -61,11 +61,11 @@
     <div class="notice notice-warning flex-wrap justify-content-between align-items-center mb-4">
         <span class="d-inline-flex align-items-center gap-2">
             <icon name="alert" size="20" />
-            @Localizer["{0} of {1} articles have embeddings. Questions can only find articles that have one.", Model.EmbeddedCount, Model.Articles.TotalCount]
+            @Localizer["{0} of {1} articles are ready for questions. Questions can only find articles that are ready.", Model.EmbeddedCount, Model.Articles.TotalCount]
         </span>
         <form asp-action="Embed" asp-route-id="@Model.Id" method="post" class="d-flex align-items-center gap-2">
             <span class="small">@Localizer["This can take a few minutes."]</span>
-            <button type="submit" class="btn btn-primary btn-sm">@Localizer["Create embeddings"]</button>
+            <button type="submit" class="btn btn-primary btn-sm">@Localizer["Prepare the articles"]</button>
         </form>
     </div>
 }

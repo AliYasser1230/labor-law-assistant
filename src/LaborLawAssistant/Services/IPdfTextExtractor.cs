@@ -4,5 +4,5 @@ public record PdfPageText(int PageNumber, string Text);
 
 public interface IPdfTextExtractor
 {
-    IReadOnlyList<PdfPageText> ExtractPages(string filePath);
+    IReadOnlyList<PdfPageText> ExtractPages(Stream pdf);
 }

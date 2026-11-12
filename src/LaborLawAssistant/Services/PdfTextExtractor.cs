@@ -6,9 +6,9 @@ namespace LaborLawAssistant.Services;
 
 public class PdfTextExtractor : IPdfTextExtractor
 {
-    public IReadOnlyList<PdfPageText> ExtractPages(string filePath)
+    public IReadOnlyList<PdfPageText> ExtractPages(Stream pdf)
     {
-        using var document = PdfDocument.Open(filePath);
+        using var document = PdfDocument.Open(pdf);
 
         var pages = new List<PdfPageText>();
         foreach (var page in document.GetPages())

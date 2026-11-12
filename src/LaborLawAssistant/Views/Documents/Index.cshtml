@@ -24,7 +24,7 @@
 {
     <div class="notice notice-warning mb-3">
         <icon name="alert" size="20" />
-        <span>@Localizer["The articles were saved, but the embeddings could not be created. Open the law and click \"Create embeddings\" to try again."]</span>
+        <span>@Localizer["The articles were saved, but they are not ready for questions yet. Open the law and click \"Prepare the articles\" to try again."]</span>
     </div>
 }
 
@@ -50,7 +50,7 @@ else
                         <th>@Localizer["Country"]</th>
                         <th>@Localizer["Pages"]</th>
                         <th>@Localizer["Articles"]</th>
-                        <th>@Localizer["Embeddings"]</th>
+                        <th>@Localizer["Ready for questions"]</th>
                         <th>@Localizer["Uploaded"]</th>
                     </tr>
                 </thead>
@@ -68,7 +68,7 @@ else
                             <td>@document.ArticleCount</td>
                             <td>
                                 <span class="pill @(ready ? "pill-success" : "pill-warning")">
-                                    <icon name="@(ready ? "check" : "alert")" size="12" />@document.EmbeddedCount / @document.ArticleCount
+                                    <icon name="@(ready ? "check" : "alert")" size="12" />@(ready ? Localizer["Ready"] : Localizer["{0} of {1} ready", document.EmbeddedCount, document.ArticleCount])
                                 </span>
                             </td>
                             <td class="text-nowrap small text-body-secondary">@document.UploadedAt.ToLocalTime().ToString("g")</td>

@@ -138,21 +138,6 @@
   <data name="This can take a few minutes." xml:space="preserve">
     <value>قد يستغرق هذا بضع دقائق.</value>
   </data>
-  <data name="Create embeddings" xml:space="preserve">
-    <value>إنشاء التضمينات</value>
-  </data>
-  <data name="Embeddings created for {0} articles." xml:space="preserve">
-    <value>تم إنشاء التضمينات لـ {0} مادة.</value>
-  </data>
-  <data name="{0} of {1} articles have embeddings. Questions can only find articles that have one." xml:space="preserve">
-    <value>{0} من {1} مادة لديها تضمينات. لا يمكن للأسئلة العثور إلا على المواد التي لديها تضمينات.</value>
-  </data>
-  <data name="The embeddings could not be created. Check the Voyage AI API key and the internet connection, then try again." xml:space="preserve">
-    <value>تعذّر إنشاء التضمينات. تحقق من مفتاح Voyage AI ومن الاتصال بالإنترنت، ثم حاول مرة أخرى.</value>
-  </data>
-  <data name="The articles were saved, but the embeddings could not be created. Open the law and click &quot;Create embeddings&quot; to try again." xml:space="preserve">
-    <value>تم حفظ المواد، لكن تعذّر إنشاء التضمينات. افتح القانون واضغط "إنشاء التضمينات" للمحاولة مرة أخرى.</value>
-  </data>
 
   <data name="Your question" xml:space="preserve">
     <value>سؤالك</value>
@@ -172,9 +157,6 @@
   <data name="I couldn't find this in the law. Try asking in a different way." xml:space="preserve">
     <value>لم أجد هذا في القانون. جرّب صياغة السؤال بطريقة أخرى.</value>
   </data>
-  <data name="{0}% match" xml:space="preserve">
-    <value>تطابق {0}%</value>
-  </data>
   <data name="The search is not available right now. Please try again in a minute." xml:space="preserve">
     <value>البحث غير متاح الآن. حاول مرة أخرى بعد دقيقة.</value>
   </data>
@@ -188,14 +170,8 @@
   <data name="Cited in the answer" xml:space="preserve">
     <value>مذكورة في الإجابة</value>
   </data>
-  <data name="{0} input + {1} output tokens" xml:space="preserve">
-    <value>{0} رمز مُدخل + {1} رمز مُخرج</value>
-  </data>
   <data name="Reading the law and writing the answer…" xml:space="preserve">
     <value>جارٍ قراءة القانون وكتابة الإجابة…</value>
-  </data>
-  <data name="Claude could not answer this question. Try asking it in a different way." xml:space="preserve">
-    <value>لم يتمكن Claude من الإجابة عن هذا السؤال. جرّب صياغته بطريقة أخرى.</value>
   </data>
   <data name="The answer is not available right now. The closest articles are shown below." xml:space="preserve">
     <value>الإجابة غير متاحة الآن. أقرب المواد معروضة بالأسفل.</value>
@@ -292,9 +268,6 @@
   <data name="Drag and drop the PDF here, or click to choose a file" xml:space="preserve">
     <value>اسحب ملف PDF وأفلته هنا، أو اضغط لاختيار ملف</value>
   </data>
-  <data name="Every question that was asked, with its answer, time and cost." xml:space="preserve">
-    <value>كل سؤال تم طرحه، مع إجابته ووقته وتكلفته.</value>
-  </data>
   <data name="No questions yet." xml:space="preserve">
     <value>لا توجد أسئلة بعد.</value>
   </data>
@@ -307,9 +280,6 @@
   <data name="Answered from the law" xml:space="preserve">
     <value>أُجيب عنها من القانون</value>
   </data>
-  <data name="Total cost" xml:space="preserve">
-    <value>التكلفة الإجمالية</value>
-  </data>
   <data name="Showing questions {0}–{1} of {2}" xml:space="preserve">
     <value>عرض الأسئلة {0}–{1} من {2}</value>
   </data>
@@ -321,5 +291,38 @@
   </data>
   <data name="Full answer" xml:space="preserve">
     <value>الإجابة كاملة</value>
+  </data>
+  <data name="Ready for questions" xml:space="preserve">
+    <value>جاهزة للأسئلة</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>جاهز</value>
+  </data>
+  <data name="{0} of {1} ready" xml:space="preserve">
+    <value>{0} من {1} جاهزة</value>
+  </data>
+  <data name="Articles ready for questions" xml:space="preserve">
+    <value>مواد جاهزة للأسئلة</value>
+  </data>
+  <data name="{0} articles are now ready for questions." xml:space="preserve">
+    <value>أصبحت {0} مادة جاهزة للأسئلة.</value>
+  </data>
+  <data name="The articles could not be prepared right now. Please try again in a minute." xml:space="preserve">
+    <value>تعذّر تجهيز المواد الآن. حاول مرة أخرى بعد دقيقة.</value>
+  </data>
+  <data name="{0} of {1} articles are ready for questions. Questions can only find articles that are ready." xml:space="preserve">
+    <value>{0} من {1} مادة جاهزة للأسئلة. لا يمكن للأسئلة العثور إلا على المواد الجاهزة.</value>
+  </data>
+  <data name="Prepare the articles" xml:space="preserve">
+    <value>تجهيز المواد</value>
+  </data>
+  <data name="The articles were saved, but they are not ready for questions yet. Open the law and click &quot;Prepare the articles&quot; to try again." xml:space="preserve">
+    <value>تم حفظ المواد، لكنها ليست جاهزة للأسئلة بعد. افتح القانون واضغط "تجهيز المواد" للمحاولة مرة أخرى.</value>
+  </data>
+  <data name="The assistant could not answer this question. Try asking it in a different way." xml:space="preserve">
+    <value>لم يتمكن المساعد من الإجابة عن هذا السؤال. جرّب صياغته بطريقة أخرى.</value>
+  </data>
+  <data name="Every question that was asked, with its answer." xml:space="preserve">
+    <value>كل سؤال تم طرحه، مع إجابته.</value>
   </data>
 </root>

@@ -13,7 +13,6 @@ public class HistoryController(AppDbContext db) : Controller
     {
         var totalQuestions = await db.QuestionLogs.CountAsync();
         var answeredQuestions = await db.QuestionLogs.CountAsync(log => log.InputTokens > 0);
-        var costs = await db.QuestionLogs.Select(log => log.CostUsd).ToListAsync();
 
         var totalPages = Math.Max(1, (int)Math.Ceiling(totalQuestions / (double)QuestionsPerPage));
         page = Math.Clamp(page, 1, totalPages);
@@ -26,16 +25,13 @@ public class HistoryController(AppDbContext db) : Controller
                 log.Country,
                 log.Question,
                 log.Answer,
-                log.InputTokens,
-                log.OutputTokens,
-                log.CostUsd,
+                log.InputTokens > 0,
                 log.AskedAt))
             .ToListAsync();
 
         return View(new HistoryPageViewModel(
             totalQuestions,
             answeredQuestions,
-            costs.Sum(),
             new PagedResult<HistoryItemViewModel>(items, page, QuestionsPerPage, totalQuestions)));
     }
 }

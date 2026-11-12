@@ -1,0 +1,12 @@
+.git/
+.gitignore
+**/bin/
+**/obj/
+**/*.db
+**/*.db-shm
+**/*.db-wal
+**/App_Data/
+deploy/cloud-run.env
+docs/
+PLAN.md
+CLAUDE.md

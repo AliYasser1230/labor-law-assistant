@@ -14,26 +14,31 @@ public class LawDocumentImporter(
 {
     public async Task<ImportResult> ImportAsync(Country country, string title, IFormFile file)
     {
-        var storedFileName = await storage.SaveAsync(file);
+        byte[] pdfBytes;
+        using (var buffer = new MemoryStream())
+        {
+            await file.CopyToAsync(buffer);
+            pdfBytes = buffer.ToArray();
+        }
 
         IReadOnlyList<PdfPageText> pages;
         try
         {
-            pages = pdfTextExtractor.ExtractPages(storage.GetFullPath(storedFileName));
+            pages = pdfTextExtractor.ExtractPages(new MemoryStream(pdfBytes, writable: false));
         }
         catch (Exception exception)
         {
             logger.LogWarning(exception, "Could not read PDF {FileName}", file.FileName);
-            storage.Delete(storedFileName);
             return ImportResult.Failed("This PDF could not be read. It may be damaged or password-protected.");
         }
 
         var articles = articleSplitter.Split(pages);
         if (articles.Count == 0)
         {
-            storage.Delete(storedFileName);
             return ImportResult.Failed("No articles were found in this PDF. Is it a text PDF (not a scanned image)?");
         }
+
+        var storedFileName = await storage.SaveAsync(new MemoryStream(pdfBytes, writable: false));
 
         var document = new LawDocument
         {
@@ -53,7 +58,16 @@ public class LawDocumentImporter(
                 .ToList(),
         };
         db.LawDocuments.Add(document);
-        await db.SaveChangesAsync();
+        try
+        {
+            await db.SaveChangesAsync();
+        }
+        catch
+        {
+            await storage.DeleteAsync(storedFileName);
+            throw;
+        }
+
         logger.LogInformation("Imported {Title}: {Pages} pages, {Articles} articles", title, pages.Count, articles.Count);
 
         var embedding = await EmbedMissingArticlesAsync(document.Id);

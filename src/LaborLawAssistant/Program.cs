@@ -1,11 +1,14 @@
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Anthropic;
-using Microsoft.Extensions.Options;
+using Google.Api.Gax;
+using Google.Cloud.Storage.V1;
 using LaborLawAssistant;
 using LaborLawAssistant.Data;
 using LaborLawAssistant.Services;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.Extensions.WebEncoders;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,10 +26,34 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
         .AddSupportedUICultures(cultures);
 });
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+var database = builder.Configuration.GetSection(DatabaseOptions.SectionName).Get<DatabaseOptions>() ?? new DatabaseOptions();
+if (database.UsePostgreSql)
+{
+    builder.Services.AddDbContext<AppDbContext, PostgresAppDbContext>(options =>
+        options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
+}
+else
+{
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+}
 
-builder.Services.AddScoped<IDocumentStorage, DocumentStorage>();
+builder.Services.AddDataProtection()
+    .SetApplicationName("LaborLawAssistant")
+    .PersistKeysToDbContext<AppDbContext>();
+
+builder.Services.Configure<StorageOptions>(builder.Configuration.GetSection(StorageOptions.SectionName));
+var storage = builder.Configuration.GetSection(StorageOptions.SectionName).Get<StorageOptions>() ?? new StorageOptions();
+if (storage.UseGoogleCloudStorage)
+{
+    builder.Services.AddSingleton(_ => new StorageClientBuilder { EmulatorDetection = EmulatorDetection.EmulatorOrProduction }.Build());
+    builder.Services.AddScoped<IDocumentStorage, GoogleCloudDocumentStorage>();
+}
+else
+{
+    builder.Services.AddScoped<IDocumentStorage, LocalDocumentStorage>();
+}
+
 builder.Services.AddScoped<IPdfTextExtractor, PdfTextExtractor>();
 builder.Services.AddScoped<IArticleSplitter, ArticleSplitter>();
 builder.Services.AddScoped<ILawDocumentImporter, LawDocumentImporter>();
@@ -49,11 +76,19 @@ builder.Services.AddSingleton(serviceProvider =>
 });
 builder.Services.AddScoped<IAnswerService, ClaudeAnswerService>();
 
+builder.Services.AddHealthChecks();
+
 builder.Services.AddControllersWithViews()
     .AddDataAnnotationsLocalization(options =>
         options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource)));
 
 var app = builder.Build();
+
+if (database.MigrateOnStartup)
+{
+    using var scope = app.Services.CreateScope();
+    scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.Migrate();
+}
 
 if (!app.Environment.IsDevelopment())
 {
@@ -70,6 +105,8 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+app.MapHealthChecks("/health");
 
 app.MapControllerRoute(
     name: "default",

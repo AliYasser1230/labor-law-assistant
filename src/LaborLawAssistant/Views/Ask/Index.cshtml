@@ -88,7 +88,7 @@ else if (Model.Result is { Found: true } result)
     {
         <div class="notice notice-warning mb-4">
             <icon name="alert" size="20" />
-            <span>@Localizer["Claude could not answer this question. Try asking it in a different way."]</span>
+            <span>@Localizer["The assistant could not answer this question. Try asking it in a different way."]</span>
         </div>
     }
     else if (Model.Answer is not null)
@@ -107,7 +107,7 @@ else if (Model.Result is { Found: true } result)
             var number = i + 1;
             <div class="col">
                 <partial name="_ArticleCard"
-                         model="new ArticleCardViewModel(ArticleItemViewModel.Create(hit.ArticleNumber, hit.PageNumber, hit.Text), hit.LawTitle, hit.Score, number, cited.Contains(number))" />
+                         model="new ArticleCardViewModel(ArticleItemViewModel.Create(hit.ArticleNumber, hit.PageNumber, hit.Text), hit.LawTitle, number, cited.Contains(number))" />
             </div>
         }
     </div>

@@ -492,3 +492,6 @@ App_Data/
 # Private planning notes (kept on this computer only)
 PLAN.md
 CLAUDE.md
+
+# Your own Google Cloud settings and API keys for deploy/deploy-cloud-run.sh
+deploy/cloud-run.env
